@@ -1,9 +1,3 @@
 ---
-title: "About"
+title: "Financial Statement Data Sets"
 ---
-
-About this site
-
-```{r}
-1 + 1
-```

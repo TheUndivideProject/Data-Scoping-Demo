@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Data Scoping Demo"
+  title: "Noha's Data Exploration"
   navbar:
     left:
       - href: index.qmd
@@ -15,6 +15,5 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
-
 
 

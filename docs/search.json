@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Data Scoping Demo",
+    "title": "Noha’s Data Exploration",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "The goal of this website is to explore datasets related to philanthropic spending efforts towards environmental and social justice causes.\nThe findings on this platform are a work in progress. Suggestions are welcome."
   },
   {
     "objectID": "about.html",
@@ -12,5 +12,19 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html#project-objectives",
+    "href": "index.html#project-objectives",
+    "title": "Noha’s Data Exploration",
+    "section": "Project Objectives",
+    "text": "Project Objectives\nThis project aims to:\n\nScope a range of philanthropic giving data sources, including online databases and public records.\nDiscern trends and patterns in spending towards environmental and social justice.\nCompile information for the development of an environmental and climate justice dashboard.’"
+  },
+  {
+    "objectID": "index.html#website-structure",
+    "href": "index.html#website-structure",
+    "title": "Noha’s Data Exploration",
+    "section": "Website Structure",
+    "text": "Website Structure\n\nFinancial Statement Data Sets\n\nMultiple pages documenting important fields in corporate financial reports and potential significance for dashboard."
   }
 ]

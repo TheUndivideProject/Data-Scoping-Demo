@@ -1,25 +1,23 @@
 ---
-title: "Data Scoping Demo"
+title: "Noha's Data Exploration"
 ---
-
-
----
-
 
 The goal of this website is to explore datasets related to philanthropic spending efforts towards environmental and social justice causes.
 
 The findings on this platform are a work in progress. Suggestions are welcome.
 
-Project Objectives
+## Project Objectives
+
 This project aims to:
 
-Scope a range of philanthropic giving data sources, including online databases and public records.
+-   Scope a range of philanthropic giving data sources, including online databases and public records.
 
-Discern trends and patterns in spending towards environmental and social justice.
+-   Discern trends and patterns in spending towards environmental and social justice.
 
-Compile information for the development of an environmental and climate justice dashboard.'
+-   Compile information for the development of an environmental and climate justice dashboard.'
 
-Website Structure
-Financial Statement Data Sets
+## Website Structure
 
-Multiple pages documenting important fields in corporate financial reports and potential significance for dashboard.
+-   Financial Statement Data Sets
+
+    -   Multiple pages documenting important fields in corporate financial reports and potential significance for dashboard.

@@ -3,12 +3,15 @@ project:
   output-dir: docs
 
 website:
-  title: "Noha's Data Exploration"
+  title: "Financial Data Exploration"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - text: Home
+        href: index.qmd
+      - text: Financial Statement Data Scoping
+        menu:
+          - text: 2024 Q1 Submission Data Report
+            href: q1-submissions.qmd
 
 format:
   html:

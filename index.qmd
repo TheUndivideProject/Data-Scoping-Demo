@@ -1,5 +1,5 @@
 ---
-title: "Noha's Data Exploration"
+title: "Financial Data Exploration"
 ---
 
 The goal of this website is to explore data sets related to philanthropic spending efforts towards environmental and social justice causes.

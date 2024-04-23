@@ -1,0 +1,7 @@
+---
+title: "2024 Q1 Submission Data Report"
+---
+
+## 1. Introduction
+
+This document aims to perform an initial exploration of the features and values within the Securities and Exchange Committee's Financial Statement Submissions to pinpoint variables for assessing philanthropic giving in the environmental and social justice sectors.

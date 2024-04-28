@@ -11,7 +11,7 @@ website:
       - text: Financial Statement Data Scoping
         menu:
           - text: 2024 Q1 Submission Data Report
-            href: q1-submissions.qmd
+            href: website/q1-submissions.qmd
 
 format:
   html:

@@ -7,7 +7,7 @@ website:
   navbar:
     left:
       - text: Home
-        href: index.qmd
+        href: website/index.qmd
       - text: Financial Statement Data Scoping
         menu:
           - text: 2024 Q1 Submission Data Report

@@ -1,0 +1,84 @@
+---
+title: "2024 Q1 Submission Data Report"
+output:
+  quarto::html_document:
+    toc: true
+
+format:
+  html:
+    code-fold: true
+---
+
+## 1. Introduction
+
+This document aims to perform an initial exploration of the features and values within the Securities and Exchange Committee's Financial Statement Submissions to pinpoint variables for assessing philanthropic giving in the environmental and social justice sectors.
+
+The Financial Statement Submissions of the SEC provide EDGAR information from the face financials of all financial statements. EDGAR is the SEC filing system that all public companies must use when filing documents with the Commission. This data was extracted from exhibits to corporate financial reports using eXtensible Business Reporting Language (XBRL). You can find more information on sec.gov (https://www.sec.gov/dera/data/financial-statement).
+
+## 2. First Glance
+
+### 2.1. General Summary
+
+------------------------------------------------------------------------
+
+```{python}
+# libraries for data manipulation.
+import pandas as pd
+import numpy as np
+
+# libraries for data visualisation
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+import plotly.io as pio
+
+# libraries for quarto rendering
+from IPython.display import Markdown,display
+from tabulate import tabulate
+import plotly.io as pio
+
+# remove warnings
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
+# read in data from 'sub.csv' in the 'data' folder
+sub_data = pd.read_csv('../data/sub.csv')
+
+# print data dimensions
+shape_caption = "Data Dimensions:"
+shape_df = pd.DataFrame({
+        'Dimension': ['Rows', 'Columns'],
+        'Count': [sub_data.shape[0], sub_data.shape[1]]
+    })
+shape_df['Count'] = shape_df['Count'].apply(lambda x: f"{x:,}")
+shape_markdown = shape_caption + "\n\n" + shape_df.to_markdown(index=False)
+display(Markdown(shape_markdown))
+
+# print a sample of the data
+first_five_rows_caption = "First Five Rows of Data:"
+first_five_rows_markdown = first_five_rows_caption + "\n\n" + sub_data.head().to_markdown(index=False)
+display(Markdown(first_five_rows_markdown))
+
+# print metadata
+metadata_caption = "Metadata:"
+column_metadata = []
+
+for col in sub_data.columns:
+    # gather metadata for each col
+    col_metadata = {
+        'Column Name': col,
+        'Data Type': str(sub_data[col].dtype),
+        'Unique Values': sub_data[col].nunique(),
+        'Missing Values': sub_data[col].isnull().sum()
+    }
+    # append metadata to list
+    column_metadata.append(col_metadata)
+
+# convert list to pd df and then markdown table
+metadata_df = pd.DataFrame(column_metadata)
+metadata_df['Unique Values'] = metadata_df['Unique Values'].apply(lambda x: f"{x:,}")
+metadata_df['Missing Values'] = metadata_df['Missing Values'].apply(lambda x: f"{x:,}")
+metadata_markdown = metadata_caption + "\n\n" + metadata_df.to_markdown(index=False)
+display(Markdown(metadata_markdown))
+
+```

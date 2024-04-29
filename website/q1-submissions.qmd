@@ -82,3 +82,21 @@ metadata_markdown = metadata_caption + "\n\n" + metadata_df.to_markdown(index=Fa
 display(Markdown(metadata_markdown))
 
 ```
+
+### 2.2. Statistical Summary
+
+------------------------------------------------------------------------
+
+```{python}
+pd.options.display.float_format = '{:,.0f}'.format
+simple_md = sub_data.describe()
+display(simple_md)
+```
+
+## 3. Data Preparation
+
+In this section, we outline the initial steps for preparing SEC Financial Statement Submissions for analysis. Our objectives include ensuring consistent column naming, handling missing values, and formatting data for analysis. Click the dropdown for code details.
+
+```{python}
+
+```

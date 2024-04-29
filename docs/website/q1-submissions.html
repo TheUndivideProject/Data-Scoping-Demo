@@ -93,6 +93,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -116,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.qmd" rel="" target="">
+    <a class="nav-link" href="../website/index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -150,7 +153,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#first-glance" id="toc-first-glance" class="nav-link" data-scroll-target="#first-glance">2. First Glance</a>
   <ul class="collapse">
   <li><a href="#general-summary" id="toc-general-summary" class="nav-link" data-scroll-target="#general-summary">2.1. General Summary</a></li>
+  <li><a href="#statistical-summary" id="toc-statistical-summary" class="nav-link" data-scroll-target="#statistical-summary">2.2. Statistical Summary</a></li>
   </ul></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">3. Data Preparation</a></li>
   </ul>
 </nav>
     </div>
@@ -258,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Rows</td>
-<td style="text-align: left;">24,333</td>
+<td style="text-align: left;">24,336</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Columns</td>
@@ -271,271 +276,271 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>First Five Rows of Data:</p>
 <table class="table table-sm table-striped small">
 <colgroup>
-<col style="width: 4%">
-<col style="width: 1%">
-<col style="width: 6%">
-<col style="width: 1%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 3%">
-<col style="width: 2%">
-<col style="width: 4%">
-<col style="width: 1%">
-<col style="width: 3%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 3%">
-<col style="width: 2%">
-<col style="width: 4%">
-<col style="width: 1%">
-<col style="width: 3%">
 <col style="width: 2%">
 <col style="width: 2%">
 <col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
 <col style="width: 3%">
-<col style="width: 1%">
-<col style="width: 1%">
-<col style="width: 1%">
-<col style="width: 2%">
+<col style="width: 3%">
 <col style="width: 2%">
 <col style="width: 1%">
 <col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 3%">
 <col style="width: 2%">
 <col style="width: 2%">
 <col style="width: 2%">
 <col style="width: 2%">
-<col style="width: 5%">
+<col style="width: 1%">
+<col style="width: 3%">
 <col style="width: 2%">
-<col style="width: 2%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 4%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">adsh</th>
-<th style="text-align: right;">cik</th>
-<th style="text-align: left;">name</th>
-<th style="text-align: right;">sic</th>
-<th style="text-align: left;">countryba</th>
-<th style="text-align: left;">stprba</th>
-<th style="text-align: left;">cityba</th>
-<th style="text-align: right;">zipba</th>
-<th style="text-align: left;">bas1</th>
-<th style="text-align: right;">bas2</th>
-<th style="text-align: left;">baph</th>
-<th style="text-align: left;">countryma</th>
-<th style="text-align: left;">stprma</th>
-<th style="text-align: left;">cityma</th>
-<th style="text-align: left;">zipma</th>
-<th style="text-align: left;">mas1</th>
-<th style="text-align: right;">mas2</th>
-<th style="text-align: left;">countryinc</th>
-<th style="text-align: left;">stprinc</th>
-<th style="text-align: right;">ein</th>
-<th style="text-align: left;">former</th>
-<th style="text-align: right;">changed</th>
-<th style="text-align: left;">afs</th>
-<th style="text-align: right;">wksi</th>
-<th style="text-align: right;">fye</th>
-<th style="text-align: left;">form</th>
-<th style="text-align: right;">period</th>
-<th style="text-align: right;">fy</th>
-<th style="text-align: left;">fp</th>
-<th style="text-align: right;">filed</th>
-<th style="text-align: left;">accepted</th>
-<th style="text-align: right;">prevrpt</th>
-<th style="text-align: right;">detail</th>
-<th style="text-align: left;">instance</th>
-<th style="text-align: right;">nciks</th>
-<th style="text-align: right;">aciks</th>
+<th style="text-align: left;">ACCESSION NUMBER</th>
+<th style="text-align: right;">CENTRAL INDEX KEY</th>
+<th style="text-align: left;">NAME</th>
+<th style="text-align: right;">CLASSIFICATION</th>
+<th style="text-align: left;">BA COUNTRY</th>
+<th style="text-align: left;">BA STATE</th>
+<th style="text-align: left;">BA CITY</th>
+<th style="text-align: left;">BA ZIP CODE</th>
+<th style="text-align: left;">BUSINESS ADDRESS</th>
+<th style="text-align: left;">BUSINESS ADDRESS (CONT.)</th>
+<th style="text-align: left;">PHONE NUMBER</th>
+<th style="text-align: left;">MA COUNTRY</th>
+<th style="text-align: left;">MA STATE</th>
+<th style="text-align: left;">MA CITY</th>
+<th style="text-align: left;">MA ZIP CODE</th>
+<th style="text-align: left;">MAILING ADDRESS</th>
+<th style="text-align: left;">MAILING ADDRESS (CONT.)</th>
+<th style="text-align: left;">INCORPORATION COUNTRY</th>
+<th style="text-align: left;">INCORPORATION STATE</th>
+<th style="text-align: right;">EMPLOYEE IDENTIFICATION NUMBER</th>
+<th style="text-align: left;">FORMER NAME</th>
+<th style="text-align: right;">NAME CHANGE DATE</th>
+<th style="text-align: left;">FILER STATUS</th>
+<th style="text-align: right;">WKSI</th>
+<th style="text-align: right;">FISCAL YEAR END DATE</th>
+<th style="text-align: left;">SUBMISSION TYPE</th>
+<th style="text-align: right;">BALANCE SHEET DATE</th>
+<th style="text-align: right;">FISCAL YEAR FOCUS</th>
+<th style="text-align: left;">FISCAL PERIOD FOCUS</th>
+<th style="text-align: right;">FILING DATE</th>
+<th style="text-align: left;">FILING ACCEPTANCE DATE</th>
+<th style="text-align: right;">PREVIOUS REPORT</th>
+<th style="text-align: right;">CONTAINS REQUIRED DETAIL</th>
+<th style="text-align: left;">INSTANCE DOCUMENT</th>
+<th style="text-align: right;">NUMBER OF CENTRAL INDEX KEYS</th>
+<th style="text-align: right;">ADDITIONAL CENTRAL INDEX KEYS</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">0000022356-24-000019</td>
-<td style="text-align: right;">22356</td>
-<td style="text-align: left;">COMMERCE BANCSHARES INC /MO/</td>
-<td style="text-align: right;">6022</td>
+<td style="text-align: left;">0000005272-24-000023</td>
+<td style="text-align: right;">5272</td>
+<td style="text-align: left;">AMERICAN INTERNATIONAL GROUP, INC.</td>
+<td style="text-align: right;">6331</td>
 <td style="text-align: left;">US</td>
-<td style="text-align: left;">MO</td>
-<td style="text-align: left;">KANSAS CITY</td>
-<td style="text-align: right;">64106</td>
-<td style="text-align: left;">1000 WALNUT</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">8162342000</td>
+<td style="text-align: left;">NY</td>
+<td style="text-align: left;">NEW YORK</td>
+<td style="text-align: left;">10020-1304</td>
+<td style="text-align: left;">1271 AVE OF THE AMERICAS</td>
+<td style="text-align: left;">FL 37</td>
+<td style="text-align: left;">2127707000</td>
 <td style="text-align: left;">US</td>
-<td style="text-align: left;">MO</td>
-<td style="text-align: left;">KANSAS CITY</td>
-<td style="text-align: left;">64141-6248</td>
-<td style="text-align: left;">P O BOX 419248</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">US</td>
-<td style="text-align: left;">MO</td>
-<td style="text-align: right;">430889454</td>
-<td style="text-align: left;">nan</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">1-LAF</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1231</td>
-<td style="text-align: left;">DEF 14A</td>
-<td style="text-align: right;">2.02312e+07</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">nan</td>
-<td style="text-align: right;">20240308</td>
-<td style="text-align: left;">50:00.0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">cbsh-20240305_htm.xml</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">nan</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">0000028823-24-000025</td>
-<td style="text-align: right;">28823</td>
-<td style="text-align: left;">DIEBOLD NIXDORF, INC</td>
-<td style="text-align: right;">3578</td>
-<td style="text-align: left;">US</td>
-<td style="text-align: left;">OH</td>
-<td style="text-align: left;">NORTH CANTON</td>
-<td style="text-align: right;">44720</td>
-<td style="text-align: left;">350 ORCHARD AVE NE</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">3304904000</td>
-<td style="text-align: left;">US</td>
-<td style="text-align: left;">OH</td>
-<td style="text-align: left;">NORTH CANTON</td>
-<td style="text-align: left;">44720</td>
-<td style="text-align: left;">350 ORCHARD AVE NE</td>
-<td style="text-align: right;">nan</td>
+<td style="text-align: left;">NY</td>
+<td style="text-align: left;">NEW YORK</td>
+<td style="text-align: left;">10020-1304</td>
+<td style="text-align: left;">1271 AVE OF THE AMERICAS</td>
+<td style="text-align: left;">FL 37</td>
 <td style="text-align: left;">US</td>
 <td style="text-align: left;">DE</td>
-<td style="text-align: right;">340183970</td>
-<td style="text-align: left;">DIEBOLD INC</td>
+<td style="text-align: right;">132592361</td>
+<td style="text-align: left;">AMERICAN INTERNATIONAL GROUP INC</td>
 <td style="text-align: right;">1.99207e+07</td>
-<td style="text-align: left;">4-NON</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">1-LAF</td>
+<td style="text-align: right;">1</td>
 <td style="text-align: right;">1231</td>
 <td style="text-align: left;">10-K</td>
 <td style="text-align: right;">2.02312e+07</td>
 <td style="text-align: right;">2023</td>
 <td style="text-align: left;">FY</td>
-<td style="text-align: right;">20240308</td>
-<td style="text-align: left;">53:00.0</td>
+<td style="text-align: right;">20240214</td>
+<td style="text-align: left;">48:00.0</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">dbd-20231231_htm.xml</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">nan</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">0000029332-24-000008</td>
-<td style="text-align: right;">29332</td>
-<td style="text-align: left;">DIXIE GROUP INC</td>
-<td style="text-align: right;">2273</td>
-<td style="text-align: left;">US</td>
-<td style="text-align: left;">GA</td>
-<td style="text-align: left;">DALTON</td>
-<td style="text-align: right;">30722</td>
-<td style="text-align: left;">PO BOX 2007</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">7068765814</td>
-<td style="text-align: left;">US</td>
-<td style="text-align: left;">GA</td>
-<td style="text-align: left;">DALTON</td>
-<td style="text-align: left;">30722</td>
-<td style="text-align: left;">PO BOX 2007</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">US</td>
-<td style="text-align: left;">TN</td>
-<td style="text-align: right;">620183370</td>
-<td style="text-align: left;">DIXIE YARNS INC</td>
-<td style="text-align: right;">1.99207e+07</td>
-<td style="text-align: left;">4-NON</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1231</td>
-<td style="text-align: left;">8-K</td>
-<td style="text-align: right;">2.02402e+07</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">nan</td>
-<td style="text-align: right;">20240308</td>
-<td style="text-align: left;">14:00.0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">dxyn-20240308_htm.xml</td>
+<td style="text-align: left;">aig-20231231_htm.xml</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">nan</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">0000029332-24-000010</td>
-<td style="text-align: right;">29332</td>
-<td style="text-align: left;">DIXIE GROUP INC</td>
-<td style="text-align: right;">2273</td>
+<td style="text-align: left;">0000007789-24-000015</td>
+<td style="text-align: right;">7789</td>
+<td style="text-align: left;">ASSOCIATED BANC-CORP</td>
+<td style="text-align: right;">6022</td>
 <td style="text-align: left;">US</td>
-<td style="text-align: left;">GA</td>
-<td style="text-align: left;">DALTON</td>
-<td style="text-align: right;">30722</td>
-<td style="text-align: left;">PO BOX 2007</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">7068765814</td>
+<td style="text-align: left;">WI</td>
+<td style="text-align: left;">GREEN BAY</td>
+<td style="text-align: left;">54301</td>
+<td style="text-align: left;">433 MAIN STREET</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">920-491-7500</td>
 <td style="text-align: left;">US</td>
-<td style="text-align: left;">GA</td>
-<td style="text-align: left;">DALTON</td>
-<td style="text-align: left;">30722</td>
-<td style="text-align: left;">PO BOX 2007</td>
-<td style="text-align: right;">nan</td>
+<td style="text-align: left;">WI</td>
+<td style="text-align: left;">GREEN BAY</td>
+<td style="text-align: left;">54301</td>
+<td style="text-align: left;">433 MAIN STREET</td>
+<td style="text-align: left;">nan</td>
 <td style="text-align: left;">US</td>
-<td style="text-align: left;">TN</td>
-<td style="text-align: right;">620183370</td>
-<td style="text-align: left;">DIXIE YARNS INC</td>
-<td style="text-align: right;">1.99207e+07</td>
-<td style="text-align: left;">4-NON</td>
+<td style="text-align: left;">WI</td>
+<td style="text-align: right;">391098068</td>
+<td style="text-align: left;">ASSOCIATED BANK SERVICES INC</td>
+<td style="text-align: right;">1.97706e+07</td>
+<td style="text-align: left;">1-LAF</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1231</td>
 <td style="text-align: left;">8-K</td>
-<td style="text-align: right;">2.02402e+07</td>
+<td style="text-align: right;">2.02401e+07</td>
 <td style="text-align: right;">nan</td>
 <td style="text-align: left;">nan</td>
-<td style="text-align: right;">20240308</td>
-<td style="text-align: left;">04:00.0</td>
+<td style="text-align: right;">20240214</td>
+<td style="text-align: left;">43:00.0</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: left;">dxyn-20240308_htm.xml</td>
+<td style="text-align: left;">asb-20240214_htm.xml</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">nan</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">0000038009-24-000027</td>
-<td style="text-align: right;">38009</td>
-<td style="text-align: left;">FORD MOTOR CREDIT CO LLC</td>
-<td style="text-align: right;">6159</td>
+<td style="text-align: left;">0000009389-24-000008</td>
+<td style="text-align: right;">9389</td>
+<td style="text-align: left;">BALL CORP</td>
+<td style="text-align: right;">3411</td>
 <td style="text-align: left;">US</td>
-<td style="text-align: left;">MI</td>
-<td style="text-align: left;">DEARBORN</td>
-<td style="text-align: right;">48126</td>
-<td style="text-align: left;">ONE AMERICAN ROAD</td>
-<td style="text-align: right;">nan</td>
-<td style="text-align: left;">313-322-3000</td>
+<td style="text-align: left;">CO</td>
+<td style="text-align: left;">WESTMINSTER</td>
+<td style="text-align: left;">80021</td>
+<td style="text-align: left;">9200 W. 108TH CIRCLE</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">3034695511</td>
 <td style="text-align: left;">US</td>
-<td style="text-align: left;">MI</td>
-<td style="text-align: left;">DEARBORN</td>
-<td style="text-align: left;">48126</td>
-<td style="text-align: left;">ONE AMERICAN ROAD</td>
-<td style="text-align: right;">nan</td>
+<td style="text-align: left;">CO</td>
+<td style="text-align: left;">WESTMINSTER</td>
+<td style="text-align: left;">80021</td>
+<td style="text-align: left;">9200 W. 108TH CIRCLE</td>
+<td style="text-align: left;">nan</td>
 <td style="text-align: left;">US</td>
-<td style="text-align: left;">DE</td>
-<td style="text-align: right;">381612444</td>
-<td style="text-align: left;">FORD MOTOR CREDIT CO</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: right;">350160610</td>
+<td style="text-align: left;">BALL CORP</td>
 <td style="text-align: right;">1.99207e+07</td>
-<td style="text-align: left;">4-NON</td>
+<td style="text-align: left;">1-LAF</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1231</td>
 <td style="text-align: left;">8-K</td>
-<td style="text-align: right;">2.02402e+07</td>
+<td style="text-align: right;">2.02401e+07</td>
 <td style="text-align: right;">nan</td>
 <td style="text-align: left;">nan</td>
-<td style="text-align: right;">20240308</td>
-<td style="text-align: left;">56:00.0</td>
+<td style="text-align: right;">20240214</td>
+<td style="text-align: left;">05:00.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">ball-20240214x8k_htm.xml</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">nan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0000012208-24-000005</td>
+<td style="text-align: right;">12208</td>
+<td style="text-align: left;">BIO-RAD LABORATORIES, INC.</td>
+<td style="text-align: right;">3826</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: left;">HERCULES</td>
+<td style="text-align: left;">94547</td>
+<td style="text-align: left;">1000 ALFRED NOBEL DRIVE</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">5107247000</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: left;">HERCULES</td>
+<td style="text-align: left;">94547</td>
+<td style="text-align: left;">1000 ALFRED NOBEL DRIVE</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: right;">941381833</td>
+<td style="text-align: left;">BIO RAD LABORATORIES INC</td>
+<td style="text-align: right;">1.99207e+07</td>
+<td style="text-align: left;">1-LAF</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1231</td>
+<td style="text-align: left;">8-K</td>
+<td style="text-align: right;">2.02401e+07</td>
+<td style="text-align: right;">nan</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: right;">20240214</td>
+<td style="text-align: left;">01:00.0</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: left;">fmcc-20240308_htm.xml</td>
+<td style="text-align: left;">bio-20240209_htm.xml</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">nan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0000028823-24-000009</td>
+<td style="text-align: right;">28823</td>
+<td style="text-align: left;">DIEBOLD NIXDORF, INC</td>
+<td style="text-align: right;">3578</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">OH</td>
+<td style="text-align: left;">HUDSON</td>
+<td style="text-align: left;">44236</td>
+<td style="text-align: left;">50 EXECUTIVE PKWY</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">3304904000</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">OH</td>
+<td style="text-align: left;">HUDSON</td>
+<td style="text-align: left;">44236</td>
+<td style="text-align: left;">50 EXECUTIVE PKWY</td>
+<td style="text-align: left;">P.O. BOX 2520</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: right;">340183970</td>
+<td style="text-align: left;">DIEBOLD INC</td>
+<td style="text-align: right;">1.99207e+07</td>
+<td style="text-align: left;">2-ACC</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1231</td>
+<td style="text-align: left;">8-K</td>
+<td style="text-align: right;">2.02401e+07</td>
+<td style="text-align: right;">nan</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: right;">20240214</td>
+<td style="text-align: left;">19:00.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">dbd-20240214_htm.xml</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">nan</td>
 </tr>
@@ -545,6 +550,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display">
 <p>Metadata:</p>
 <table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 16%">
+<col style="width: 21%">
+<col style="width: 22%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Column Name</th>
@@ -555,228 +566,392 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">adsh</td>
+<td style="text-align: left;">ACCESSION NUMBER</td>
 <td style="text-align: left;">object</td>
-<td style="text-align: left;">24,333</td>
+<td style="text-align: left;">24,336</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">cik</td>
+<td style="text-align: left;">CENTRAL INDEX KEY</td>
 <td style="text-align: left;">int64</td>
 <td style="text-align: left;">6,568</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">name</td>
+<td style="text-align: left;">NAME</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">6,618</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">sic</td>
+<td style="text-align: left;">CLASSIFICATION</td>
 <td style="text-align: left;">float64</td>
 <td style="text-align: left;">396</td>
 <td style="text-align: left;">945</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">countryba</td>
+<td style="text-align: left;">BA COUNTRY</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">57</td>
 <td style="text-align: left;">25</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">stprba</td>
+<td style="text-align: left;">BA STATE</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">59</td>
 <td style="text-align: left;">1,463</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">cityba</td>
+<td style="text-align: left;">BA CITY</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">1,667</td>
 <td style="text-align: left;">26</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">zipba</td>
+<td style="text-align: left;">BA ZIP CODE</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">3,104</td>
 <td style="text-align: left;">26</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">bas1</td>
+<td style="text-align: left;">BUSINESS ADDRESS</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">6,072</td>
 <td style="text-align: left;">25</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">bas2</td>
+<td style="text-align: left;">BUSINESS ADDRESS (CONT.)</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">1,430</td>
-<td style="text-align: left;">14,007</td>
+<td style="text-align: left;">14,009</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">baph</td>
+<td style="text-align: left;">PHONE NUMBER</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">6,305</td>
 <td style="text-align: left;">18</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">countryma</td>
+<td style="text-align: left;">MA COUNTRY</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">58</td>
 <td style="text-align: left;">61</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">stprma</td>
+<td style="text-align: left;">MA STATE</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">58</td>
 <td style="text-align: left;">1,447</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">cityma</td>
+<td style="text-align: left;">MA CITY</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">1,685</td>
 <td style="text-align: left;">59</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">zipma</td>
+<td style="text-align: left;">MA ZIP CODE</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">3,110</td>
 <td style="text-align: left;">70</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">mas1</td>
+<td style="text-align: left;">MAILING ADDRESS</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">6,073</td>
 <td style="text-align: left;">61</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">mas2</td>
+<td style="text-align: left;">MAILING ADDRESS (CONT.)</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">1,418</td>
-<td style="text-align: left;">14,034</td>
+<td style="text-align: left;">14,036</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">countryinc</td>
+<td style="text-align: left;">INCORPORATION COUNTRY</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">41</td>
 <td style="text-align: left;">2,302</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">stprinc</td>
+<td style="text-align: left;">INCORPORATION STATE</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">58</td>
-<td style="text-align: left;">4,040</td>
+<td style="text-align: left;">4,041</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ein</td>
+<td style="text-align: left;">EMPLOYEE IDENTIFICATION NUMBER</td>
 <td style="text-align: left;">int64</td>
 <td style="text-align: left;">5,014</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">former</td>
+<td style="text-align: left;">FORMER NAME</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">3,828</td>
-<td style="text-align: left;">10,010</td>
+<td style="text-align: left;">10,011</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">changed</td>
+<td style="text-align: left;">NAME CHANGE DATE</td>
 <td style="text-align: left;">float64</td>
 <td style="text-align: left;">2,789</td>
-<td style="text-align: left;">10,010</td>
+<td style="text-align: left;">10,011</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">afs</td>
+<td style="text-align: left;">FILER STATUS</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">550</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">wksi</td>
+<td style="text-align: left;">WKSI</td>
 <td style="text-align: left;">int64</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fye</td>
+<td style="text-align: left;">FISCAL YEAR END DATE</td>
 <td style="text-align: left;">float64</td>
 <td style="text-align: left;">18</td>
 <td style="text-align: left;">151</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">form</td>
+<td style="text-align: left;">SUBMISSION TYPE</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">54</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">period</td>
+<td style="text-align: left;">BALANCE SHEET DATE</td>
 <td style="text-align: left;">float64</td>
 <td style="text-align: left;">37</td>
 <td style="text-align: left;">226</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fy</td>
+<td style="text-align: left;">FISCAL YEAR FOCUS</td>
 <td style="text-align: left;">float64</td>
 <td style="text-align: left;">8</td>
-<td style="text-align: left;">18,474</td>
+<td style="text-align: left;">18,476</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fp</td>
+<td style="text-align: left;">FISCAL PERIOD FOCUS</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">4</td>
-<td style="text-align: left;">18,475</td>
+<td style="text-align: left;">18,477</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">filed</td>
+<td style="text-align: left;">FILING DATE</td>
 <td style="text-align: left;">int64</td>
 <td style="text-align: left;">62</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">accepted</td>
+<td style="text-align: left;">FILING ACCEPTANCE DATE</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">60</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">prevrpt</td>
+<td style="text-align: left;">PREVIOUS REPORT</td>
 <td style="text-align: left;">int64</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">detail</td>
+<td style="text-align: left;">CONTAINS REQUIRED DETAIL</td>
 <td style="text-align: left;">int64</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">instance</td>
+<td style="text-align: left;">INSTANCE DOCUMENT</td>
 <td style="text-align: left;">object</td>
-<td style="text-align: left;">21,303</td>
+<td style="text-align: left;">21,306</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">nciks</td>
+<td style="text-align: left;">NUMBER OF CENTRAL INDEX KEYS</td>
 <td style="text-align: left;">int64</td>
 <td style="text-align: left;">8</td>
 <td style="text-align: left;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">aciks</td>
+<td style="text-align: left;">ADDITIONAL CENTRAL INDEX KEYS</td>
 <td style="text-align: left;">object</td>
 <td style="text-align: left;">136</td>
-<td style="text-align: left;">24,013</td>
+<td style="text-align: left;">24,016</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-
-
 </section>
+<section id="statistical-summary" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-summary">2.2. Statistical Summary</h3>
+<hr>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pd.options.display.float_format <span class="op">=</span> <span class="st">'{:,.0f}'</span>.<span class="bu">format</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>simple_md <span class="op">=</span> sub_data.describe()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>display(simple_md)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">CENTRAL INDEX KEY</th>
+<th data-quarto-table-cell-role="th">CLASSIFICATION</th>
+<th data-quarto-table-cell-role="th">EMPLOYEE IDENTIFICATION NUMBER</th>
+<th data-quarto-table-cell-role="th">NAME CHANGE DATE</th>
+<th data-quarto-table-cell-role="th">WKSI</th>
+<th data-quarto-table-cell-role="th">FISCAL YEAR END DATE</th>
+<th data-quarto-table-cell-role="th">BALANCE SHEET DATE</th>
+<th data-quarto-table-cell-role="th">FISCAL YEAR FOCUS</th>
+<th data-quarto-table-cell-role="th">FILING DATE</th>
+<th data-quarto-table-cell-role="th">PREVIOUS REPORT</th>
+<th data-quarto-table-cell-role="th">CONTAINS REQUIRED DETAIL</th>
+<th data-quarto-table-cell-role="th">NUMBER OF CENTRAL INDEX KEYS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>24,336</td>
+<td>23,391</td>
+<td>24,336</td>
+<td>14,325</td>
+<td>24,336</td>
+<td>24,185</td>
+<td>24,110</td>
+<td>5,860</td>
+<td>24,336</td>
+<td>24,336</td>
+<td>24,336</td>
+<td>24,336</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>1,304,082</td>
+<td>4,785</td>
+<td>440,872,540</td>
+<td>20,079,950</td>
+<td>0</td>
+<td>1,120</td>
+<td>20,236,867</td>
+<td>2,023</td>
+<td>20,240,230</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>526,886</td>
+<td>1,979</td>
+<td>336,206,478</td>
+<td>115,031</td>
+<td>0</td>
+<td>262</td>
+<td>4,650</td>
+<td>0</td>
+<td>77</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>1,750</td>
+<td>100</td>
+<td>0</td>
+<td>19,600,201</td>
+<td>0</td>
+<td>120</td>
+<td>20,051,231</td>
+<td>2,016</td>
+<td>20,240,102</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>1,000,753</td>
+<td>2,836</td>
+<td>133,816,029</td>
+<td>20,000,308</td>
+<td>0</td>
+<td>1,231</td>
+<td>20,231,231</td>
+<td>2,023</td>
+<td>20,240,201</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>1,437,089</td>
+<td>4,833</td>
+<td>410,449,260</td>
+<td>20,110,121</td>
+<td>0</td>
+<td>1,231</td>
+<td>20,240,131</td>
+<td>2,023</td>
+<td>20,240,222</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>1,735,077</td>
+<td>6,500</td>
+<td>814,467,492</td>
+<td>20,180,213</td>
+<td>0</td>
+<td>1,231</td>
+<td>20,240,229</td>
+<td>2,023</td>
+<td>20,240,312</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>2,012,326</td>
+<td>8,900</td>
+<td>999,999,999</td>
+<td>20,231,219</td>
+<td>1</td>
+<td>1,231</td>
+<td>20,240,531</td>
+<td>2,025</td>
+<td>20,240,329</td>
+<td>1</td>
+<td>1</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation">3. Data Preparation</h2>
+<p>In this section, we outline the initial steps for preparing SEC Financial Statement Submissions for analysis. Our objectives include ensuring consistent column naming, handling missing values, and formatting data for analysis. Click the dropdown for code details.</p>
+
+
 </section>
 
 </main> <!-- /main -->

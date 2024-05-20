@@ -156,6 +156,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#statistical-summary" id="toc-statistical-summary" class="nav-link" data-scroll-target="#statistical-summary">2.2. Statistical Summary</a></li>
   </ul></li>
   <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">3. Data Preparation</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">4. Analysis</a>
+  <ul class="collapse">
+  <li><a href="#identification-of-corporate-donors" id="toc-identification-of-corporate-donors" class="nav-link" data-scroll-target="#identification-of-corporate-donors">4.1. Identification of Corporate Donors</a></li>
+  <li><a href="#geographic-distribution" id="toc-geographic-distribution" class="nav-link" data-scroll-target="#geographic-distribution">4.2. Geographic Distribution</a></li>
+  <li><a href="#transparency-and-accountability" id="toc-transparency-and-accountability" class="nav-link" data-scroll-target="#transparency-and-accountability">4.3. Transparency and Accountability</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -950,8 +957,690 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-preparation" class="level2">
 <h2 class="anchored" data-anchor-id="data-preparation">3. Data Preparation</h2>
 <p>In this section, we outline the initial steps for preparing SEC Financial Statement Submissions for analysis. Our objectives include ensuring consistent column naming, handling missing values, and formatting data for analysis. Click the dropdown for code details.</p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert columns to appropriate data types</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>date_cols <span class="op">=</span> [<span class="st">'NAME CHANGE DATE'</span>, <span class="st">'BALANCE SHEET DATE'</span>, <span class="st">'FILING DATE'</span>, <span class="st">'FILING ACCEPTANCE DATE'</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> date_cols:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    sub_data[col] <span class="op">=</span> sub_data[col].astype(<span class="bu">str</span>).<span class="bu">str</span>.replace(<span class="st">'\.0$'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    sub_data <span class="op">=</span> sub_data.replace(<span class="st">'NaT'</span>, <span class="st">'NaN'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    sub_data[col] <span class="op">=</span> pd.to_datetime(sub_data[col], errors<span class="op">=</span><span class="st">'coerce'</span>).dt.date</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># replace missing values with nan</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>sub_data <span class="op">=</span> sub_data.fillna(np.nan)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># show cleaned data.</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>head_markdown <span class="op">=</span> sub_data.head().to_markdown(index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>display(Markdown(head_markdown))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">ACCESSION NUMBER</th>
+<th style="text-align: right;">CENTRAL INDEX KEY</th>
+<th style="text-align: left;">NAME</th>
+<th style="text-align: right;">CLASSIFICATION</th>
+<th style="text-align: left;">BA COUNTRY</th>
+<th style="text-align: left;">BA STATE</th>
+<th style="text-align: left;">BA CITY</th>
+<th style="text-align: left;">BA ZIP CODE</th>
+<th style="text-align: left;">BUSINESS ADDRESS</th>
+<th style="text-align: left;">BUSINESS ADDRESS (CONT.)</th>
+<th style="text-align: left;">PHONE NUMBER</th>
+<th style="text-align: left;">MA COUNTRY</th>
+<th style="text-align: left;">MA STATE</th>
+<th style="text-align: left;">MA CITY</th>
+<th style="text-align: left;">MA ZIP CODE</th>
+<th style="text-align: left;">MAILING ADDRESS</th>
+<th style="text-align: left;">MAILING ADDRESS (CONT.)</th>
+<th style="text-align: left;">INCORPORATION COUNTRY</th>
+<th style="text-align: left;">INCORPORATION STATE</th>
+<th style="text-align: right;">EMPLOYEE IDENTIFICATION NUMBER</th>
+<th style="text-align: left;">FORMER NAME</th>
+<th style="text-align: left;">NAME CHANGE DATE</th>
+<th style="text-align: left;">FILER STATUS</th>
+<th style="text-align: right;">WKSI</th>
+<th style="text-align: right;">FISCAL YEAR END DATE</th>
+<th style="text-align: left;">SUBMISSION TYPE</th>
+<th style="text-align: left;">BALANCE SHEET DATE</th>
+<th style="text-align: right;">FISCAL YEAR FOCUS</th>
+<th style="text-align: left;">FISCAL PERIOD FOCUS</th>
+<th style="text-align: left;">FILING DATE</th>
+<th style="text-align: left;">FILING ACCEPTANCE DATE</th>
+<th style="text-align: right;">PREVIOUS REPORT</th>
+<th style="text-align: right;">CONTAINS REQUIRED DETAIL</th>
+<th style="text-align: left;">INSTANCE DOCUMENT</th>
+<th style="text-align: right;">NUMBER OF CENTRAL INDEX KEYS</th>
+<th style="text-align: right;">ADDITIONAL CENTRAL INDEX KEYS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0000005272-24-000023</td>
+<td style="text-align: right;">5272</td>
+<td style="text-align: left;">AMERICAN INTERNATIONAL GROUP, INC.</td>
+<td style="text-align: right;">6331</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">NY</td>
+<td style="text-align: left;">NEW YORK</td>
+<td style="text-align: left;">10020-1304</td>
+<td style="text-align: left;">1271 AVE OF THE AMERICAS</td>
+<td style="text-align: left;">FL 37</td>
+<td style="text-align: left;">2127707000</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">NY</td>
+<td style="text-align: left;">NEW YORK</td>
+<td style="text-align: left;">10020-1304</td>
+<td style="text-align: left;">1271 AVE OF THE AMERICAS</td>
+<td style="text-align: left;">FL 37</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: right;">132592361</td>
+<td style="text-align: left;">AMERICAN INTERNATIONAL GROUP INC</td>
+<td style="text-align: left;">1992-07-03</td>
+<td style="text-align: left;">1-LAF</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1231</td>
+<td style="text-align: left;">10-K</td>
+<td style="text-align: left;">2023-12-31</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">FY</td>
+<td style="text-align: left;">2024-02-14</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">aig-20231231_htm.xml</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">nan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0000007789-24-000015</td>
+<td style="text-align: right;">7789</td>
+<td style="text-align: left;">ASSOCIATED BANC-CORP</td>
+<td style="text-align: right;">6022</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">WI</td>
+<td style="text-align: left;">GREEN BAY</td>
+<td style="text-align: left;">54301</td>
+<td style="text-align: left;">433 MAIN STREET</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">920-491-7500</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">WI</td>
+<td style="text-align: left;">GREEN BAY</td>
+<td style="text-align: left;">54301</td>
+<td style="text-align: left;">433 MAIN STREET</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">WI</td>
+<td style="text-align: right;">391098068</td>
+<td style="text-align: left;">ASSOCIATED BANK SERVICES INC</td>
+<td style="text-align: left;">1977-06-26</td>
+<td style="text-align: left;">1-LAF</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1231</td>
+<td style="text-align: left;">8-K</td>
+<td style="text-align: left;">2024-01-31</td>
+<td style="text-align: right;">nan</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">2024-02-14</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">asb-20240214_htm.xml</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">nan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0000009389-24-000008</td>
+<td style="text-align: right;">9389</td>
+<td style="text-align: left;">BALL CORP</td>
+<td style="text-align: right;">3411</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">CO</td>
+<td style="text-align: left;">WESTMINSTER</td>
+<td style="text-align: left;">80021</td>
+<td style="text-align: left;">9200 W. 108TH CIRCLE</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">3034695511</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">CO</td>
+<td style="text-align: left;">WESTMINSTER</td>
+<td style="text-align: left;">80021</td>
+<td style="text-align: left;">9200 W. 108TH CIRCLE</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: right;">350160610</td>
+<td style="text-align: left;">BALL CORP</td>
+<td style="text-align: left;">1992-07-03</td>
+<td style="text-align: left;">1-LAF</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1231</td>
+<td style="text-align: left;">8-K</td>
+<td style="text-align: left;">2024-01-31</td>
+<td style="text-align: right;">nan</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">2024-02-14</td>
+<td style="text-align: left;">2024-05-20</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">ball-20240214x8k_htm.xml</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">nan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0000012208-24-000005</td>
+<td style="text-align: right;">12208</td>
+<td style="text-align: left;">BIO-RAD LABORATORIES, INC.</td>
+<td style="text-align: right;">3826</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: left;">HERCULES</td>
+<td style="text-align: left;">94547</td>
+<td style="text-align: left;">1000 ALFRED NOBEL DRIVE</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">5107247000</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: left;">HERCULES</td>
+<td style="text-align: left;">94547</td>
+<td style="text-align: left;">1000 ALFRED NOBEL DRIVE</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: right;">941381833</td>
+<td style="text-align: left;">BIO RAD LABORATORIES INC</td>
+<td style="text-align: left;">1992-07-03</td>
+<td style="text-align: left;">1-LAF</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1231</td>
+<td style="text-align: left;">8-K</td>
+<td style="text-align: left;">2024-01-31</td>
+<td style="text-align: right;">nan</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">2024-02-14</td>
+<td style="text-align: left;">2024-05-20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">bio-20240209_htm.xml</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">nan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0000028823-24-000009</td>
+<td style="text-align: right;">28823</td>
+<td style="text-align: left;">DIEBOLD NIXDORF, INC</td>
+<td style="text-align: right;">3578</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">OH</td>
+<td style="text-align: left;">HUDSON</td>
+<td style="text-align: left;">44236</td>
+<td style="text-align: left;">50 EXECUTIVE PKWY</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">3304904000</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">OH</td>
+<td style="text-align: left;">HUDSON</td>
+<td style="text-align: left;">44236</td>
+<td style="text-align: left;">50 EXECUTIVE PKWY</td>
+<td style="text-align: left;">P.O. BOX 2520</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: right;">340183970</td>
+<td style="text-align: left;">DIEBOLD INC</td>
+<td style="text-align: left;">1992-07-03</td>
+<td style="text-align: left;">2-ACC</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1231</td>
+<td style="text-align: left;">8-K</td>
+<td style="text-align: left;">2024-01-31</td>
+<td style="text-align: right;">nan</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">2024-02-14</td>
+<td style="text-align: left;">2024-05-20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">dbd-20240214_htm.xml</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">nan</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">4. Analysis</h2>
+<p>Objective: Determine if the Submission Data Report can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.</p>
+<section id="identification-of-corporate-donors" class="level3">
+<h3 class="anchored" data-anchor-id="identification-of-corporate-donors">4.1. Identification of Corporate Donors</h3>
+<p>The Submission Data Report enables filtering based on Standard Industrial Classification codes, which indicate organizations’ areas of focus and filing department. This step enables the identification of businesses focused on environmental protection and social justice and is crucial for creating a focused dataset of relevant businesses for our objective above.</p>
+<p>The Submission Data Report also includes the former names of reporting businesses, enabling access to historical data concerning them. This information is essential for ensuring the maintenance of accurate and consistent records.</p>
+<p><strong>Sample of Name Data:</strong></p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sub_data[[<span class="st">'NAME'</span>,<span class="st">'FORMER NAME'</span>,<span class="st">'NAME CHANGE DATE'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">NAME</th>
+<th data-quarto-table-cell-role="th">FORMER NAME</th>
+<th data-quarto-table-cell-role="th">NAME CHANGE DATE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>AMERICAN INTERNATIONAL GROUP, INC.</td>
+<td>AMERICAN INTERNATIONAL GROUP INC</td>
+<td>1992-07-03</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>ASSOCIATED BANC-CORP</td>
+<td>ASSOCIATED BANK SERVICES INC</td>
+<td>1977-06-26</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>BALL CORP</td>
+<td>BALL CORP</td>
+<td>1992-07-03</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>BIO-RAD LABORATORIES, INC.</td>
+<td>BIO RAD LABORATORIES INC</td>
+<td>1992-07-03</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>DIEBOLD NIXDORF, INC</td>
+<td>DIEBOLD INC</td>
+<td>1992-07-03</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="using-standard-industrial-classification-codes" class="level4">
+<h4 class="anchored" data-anchor-id="using-standard-industrial-classification-codes">4.1.1. Using Standard Industrial Classification Codes</h4>
+<p>Standard Industrial Classification (SIC) codes are three or four-digit numerical codes that categorize the industries that companies belong to based on their business activities. The first two digits represent the highest level business classification, while the subsequent two digits are used to further refine the identification.</p>
+<p>SIC codes also determine review assignments in the Division of Corporation Finance. For example, a Metal Mining (SIC 1000) business would have its filings reviewed by staffers in the Office of Energy &amp; Transportation.</p>
+<p><strong>Sample of Possible SIC Codes:</strong></p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract sample from sec.gov/corpfin/division-of-corporation-finance-standard-industrial-classification-sic-code-list</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sic_code_data <span class="op">=</span> {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'SIC CODE'</span>: [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">700</span>, <span class="dv">800</span>, <span class="dv">900</span>, <span class="dv">1000</span>],</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">'OFFICE'</span>: [<span class="st">'Industrial Applications and Services'</span>, <span class="st">'Industrial Applications and Services'</span>, <span class="st">'Industrial Applications and Services'</span>, <span class="st">'Industrial Applications and Services'</span>, <span class="st">'Industrial Applications and Services'</span>, <span class="st">'Office of Energy &amp; Transportation'</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">'INDUSTRY TITLE'</span>: [<span class="st">'AGRICULTURAL PRODUCTION-CROPS'</span>, <span class="st">'AGRICULTURAL PROD-LIVESTOCK &amp; ANIMAL SPECIALTIES'</span>, <span class="st">'AGRICULTURAL SERVICES'</span>, <span class="st">'FORESTRY'</span>, <span class="st">'FISHING, HUNTING AND TRAPPING'</span>, <span class="st">'METAL MINING'</span>]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>sic_code_df <span class="op">=</span> pd.DataFrame(sic_code_data)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># print sample</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>display(sic_code_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SIC CODE</th>
+<th data-quarto-table-cell-role="th">OFFICE</th>
+<th data-quarto-table-cell-role="th">INDUSTRY TITLE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>100</td>
+<td>Industrial Applications and Services</td>
+<td>AGRICULTURAL PRODUCTION-CROPS</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>200</td>
+<td>Industrial Applications and Services</td>
+<td>AGRICULTURAL PROD-LIVESTOCK &amp; ANIMAL SPECIALTIES</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>700</td>
+<td>Industrial Applications and Services</td>
+<td>AGRICULTURAL SERVICES</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>800</td>
+<td>Industrial Applications and Services</td>
+<td>FORESTRY</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>900</td>
+<td>Industrial Applications and Services</td>
+<td>FISHING, HUNTING AND TRAPPING</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>1000</td>
+<td>Office of Energy &amp; Transportation</td>
+<td>METAL MINING</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="geographic-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="geographic-distribution">4.2. Geographic Distribution</h3>
+<p>The Submission Data Report includes fields for both business (where an organization’s headquarters are) and mailing address (where an organization prefers to receive letters, notices, and legal documents).</p>
+<p>Business addresses offer valuable insights into the geographic distribution of philanthropic efforts toward specific causes. This can aid in assessing regional focuses and gaps in support.</p>
+<p>Mailing addresses can be used to contact reporting businesses regarding missing or redundant data.</p>
+<p><strong>Sample of Geographic Data:</strong></p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sub_data[[<span class="st">'BA COUNTRY'</span>,<span class="st">'BA STATE'</span>,<span class="st">'BA CITY'</span>, <span class="st">'BA ZIP CODE'</span>, <span class="st">'BUSINESS ADDRESS'</span>, <span class="st">'BUSINESS ADDRESS (CONT.)'</span>, <span class="st">'MA COUNTRY'</span>, <span class="st">'MA STATE'</span>, <span class="st">'MA CITY'</span>, <span class="st">'MA ZIP CODE'</span>, <span class="st">'MAILING ADDRESS'</span>, <span class="st">'MAILING ADDRESS (CONT.)'</span>, <span class="st">'INCORPORATION COUNTRY'</span>, <span class="st">'INCORPORATION STATE'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">BA COUNTRY</th>
+<th data-quarto-table-cell-role="th">BA STATE</th>
+<th data-quarto-table-cell-role="th">BA CITY</th>
+<th data-quarto-table-cell-role="th">BA ZIP CODE</th>
+<th data-quarto-table-cell-role="th">BUSINESS ADDRESS</th>
+<th data-quarto-table-cell-role="th">BUSINESS ADDRESS (CONT.)</th>
+<th data-quarto-table-cell-role="th">MA COUNTRY</th>
+<th data-quarto-table-cell-role="th">MA STATE</th>
+<th data-quarto-table-cell-role="th">MA CITY</th>
+<th data-quarto-table-cell-role="th">MA ZIP CODE</th>
+<th data-quarto-table-cell-role="th">MAILING ADDRESS</th>
+<th data-quarto-table-cell-role="th">MAILING ADDRESS (CONT.)</th>
+<th data-quarto-table-cell-role="th">INCORPORATION COUNTRY</th>
+<th data-quarto-table-cell-role="th">INCORPORATION STATE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>US</td>
+<td>NY</td>
+<td>NEW YORK</td>
+<td>10020-1304</td>
+<td>1271 AVE OF THE AMERICAS</td>
+<td>FL 37</td>
+<td>US</td>
+<td>NY</td>
+<td>NEW YORK</td>
+<td>10020-1304</td>
+<td>1271 AVE OF THE AMERICAS</td>
+<td>FL 37</td>
+<td>US</td>
+<td>DE</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>US</td>
+<td>WI</td>
+<td>GREEN BAY</td>
+<td>54301</td>
+<td>433 MAIN STREET</td>
+<td>NaN</td>
+<td>US</td>
+<td>WI</td>
+<td>GREEN BAY</td>
+<td>54301</td>
+<td>433 MAIN STREET</td>
+<td>NaN</td>
+<td>US</td>
+<td>WI</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>US</td>
+<td>CO</td>
+<td>WESTMINSTER</td>
+<td>80021</td>
+<td>9200 W. 108TH CIRCLE</td>
+<td>NaN</td>
+<td>US</td>
+<td>CO</td>
+<td>WESTMINSTER</td>
+<td>80021</td>
+<td>9200 W. 108TH CIRCLE</td>
+<td>NaN</td>
+<td>US</td>
+<td>IN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>US</td>
+<td>CA</td>
+<td>HERCULES</td>
+<td>94547</td>
+<td>1000 ALFRED NOBEL DRIVE</td>
+<td>NaN</td>
+<td>US</td>
+<td>CA</td>
+<td>HERCULES</td>
+<td>94547</td>
+<td>1000 ALFRED NOBEL DRIVE</td>
+<td>NaN</td>
+<td>US</td>
+<td>DE</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>US</td>
+<td>OH</td>
+<td>HUDSON</td>
+<td>44236</td>
+<td>50 EXECUTIVE PKWY</td>
+<td>NaN</td>
+<td>US</td>
+<td>OH</td>
+<td>HUDSON</td>
+<td>44236</td>
+<td>50 EXECUTIVE PKWY</td>
+<td>P.O. BOX 2520</td>
+<td>US</td>
+<td>DE</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="transparency-and-accountability" class="level3">
+<h3 class="anchored" data-anchor-id="transparency-and-accountability">4.3. Transparency and Accountability</h3>
+<p>The Submission Data Report enables filtering based on WKSI status and submission detail, which reflect businesses’ timeliness and accuracy in financial reporting. This step allows for the identification of businesses that maintain high standards of corporate governance and provide reliable information to market stakeholders.</p>
+<p>The Submission Data Report denotes an organization’s submission detail with a boolean value (1 for true, 0 for false). TRUE indicates that the XBRL submission contains quantitative disclosures within the footnotes and schedules at the required detail level (e.g., each amount).</p>
+<p><strong>Sample of Submission Detail Data:</strong></p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sub_data[[<span class="st">'NAME'</span>,<span class="st">'CONTAINS REQUIRED DETAIL'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">NAME</th>
+<th data-quarto-table-cell-role="th">CONTAINS REQUIRED DETAIL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>AMERICAN INTERNATIONAL GROUP, INC.</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>ASSOCIATED BANC-CORP</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>BALL CORP</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>BIO-RAD LABORATORIES, INC.</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>DIEBOLD NIXDORF, INC</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="using-wksi-status" class="level4">
+<h4 class="anchored" data-anchor-id="using-wksi-status">4.3.1. Using WKSI Status</h4>
+<p>The Submission Data Report denotes an organization’s WKSI status with a boolean value (1 for true, 0 for false). To be a WKSI, an organization must meet the three criteria outlined in SEC Rule 405:</p>
+<ol type="1">
+<li><p>The issuer must meet the requirements of Form S-3. This requires that the issuer has (a) timely filed periodic reports for 12 calendar months and (b) not defaulted on any indebtedness or long-term leases.</p></li>
+<li><p>The issuer has (a) over $700 million in public float and (b) issued more than $1 billion in principal of non-convertible debt securities in primary offerings.</p></li>
+<li><p>The issuer is not an “ineligible issuer.” An issuer can be ineligible by, among other things, failing to meet their periodic reporting requirements, being a shell company, having filed for bankruptcy recently, or having been convicted of a felony or misdemeanor.</p></li>
+</ol>
+<p>You can find more information on law.cornell.edu (<a href="https://www.law.cornell.edu/wex/well-known_seasoned_issuer_(wksi)">www.law.cornell.edu/wex/well-known_seasoned_issuer_(wksi)</a>).</p>
+<p><strong>Sample of WKSI Data:</strong></p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sub_data[[<span class="st">'NAME'</span>,<span class="st">'WKSI'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">NAME</th>
+<th data-quarto-table-cell-role="th">WKSI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>AMERICAN INTERNATIONAL GROUP, INC.</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>ASSOCIATED BANC-CORP</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>BALL CORP</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>BIO-RAD LABORATORIES, INC.</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>DIEBOLD NIXDORF, INC</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->

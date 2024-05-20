@@ -98,5 +98,105 @@ display(simple_md)
 In this section, we outline the initial steps for preparing SEC Financial Statement Submissions for analysis. Our objectives include ensuring consistent column naming, handling missing values, and formatting data for analysis. Click the dropdown for code details.
 
 ```{python}
+# convert columns to appropriate data types
+date_cols = ['NAME CHANGE DATE', 'BALANCE SHEET DATE', 'FILING DATE', 'FILING ACCEPTANCE DATE']
+for col in date_cols:
+    sub_data[col] = sub_data[col].astype(str).str.replace('\.0$', '', regex=True)
+    sub_data = sub_data.replace('NaT', 'NaN')
+    sub_data[col] = pd.to_datetime(sub_data[col], errors='coerce').dt.date
+
+# replace missing values with nan
+sub_data = sub_data.fillna(np.nan)
+
+# show cleaned data.
+head_markdown = sub_data.head().to_markdown(index=False)
+display(Markdown(head_markdown))
 
 ```
+
+## 4. Analysis
+
+Objective: Determine if the Submission Data Report can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.
+
+### 4.1. Identification of Corporate Donors
+
+The Submission Data Report enables filtering based on Standard Industrial Classification codes, which indicate organizations' areas of focus and filing department. This step enables the identification of businesses focused on environmental protection and social justice and is crucial for creating a focused dataset of relevant businesses for our objective above.
+
+The Submission Data Report also includes the former names of reporting businesses, enabling access to historical data concerning them. This information is essential for ensuring the maintenance of accurate and consistent records.
+
+**Sample of Name Data:**
+
+```{python}
+sub_data[['NAME','FORMER NAME','NAME CHANGE DATE']].head()
+```
+
+#### 4.1.1. Using Standard Industrial Classification Codes
+
+Standard Industrial Classification (SIC) codes are three or four-digit numerical codes that categorize the industries that companies belong to based on their business activities. The first two digits represent the highest level business classification, while the subsequent two digits are used to further refine the identification.
+
+SIC codes also determine review assignments in the Division of Corporation Finance. For example, a Metal Mining (SIC 1000) business would have its filings reviewed by staffers in the Office of Energy & Transportation.
+
+**Sample of Possible SIC Codes:**
+
+```{python}
+
+# extract sample from sec.gov/corpfin/division-of-corporation-finance-standard-industrial-classification-sic-code-list
+sic_code_data = {
+  'SIC CODE': [100, 200, 700, 800, 900, 1000],
+  
+  'OFFICE': ['Industrial Applications and Services', 'Industrial Applications and Services', 'Industrial Applications and Services', 'Industrial Applications and Services', 'Industrial Applications and Services', 'Office of Energy & Transportation'],
+  
+  'INDUSTRY TITLE': ['AGRICULTURAL PRODUCTION-CROPS', 'AGRICULTURAL PROD-LIVESTOCK & ANIMAL SPECIALTIES', 'AGRICULTURAL SERVICES', 'FORESTRY', 'FISHING, HUNTING AND TRAPPING', 'METAL MINING']
+  }
+  
+sic_code_df = pd.DataFrame(sic_code_data)
+
+# print sample
+display(sic_code_df)
+```
+
+### 4.2. Geographic Distribution
+
+The Submission Data Report includes fields for both business (where an organization's headquarters are) and mailing address (where an organization prefers to receive letters, notices, and legal documents).
+
+Business addresses offer valuable insights into the geographic distribution of philanthropic efforts toward specific causes. This can aid in assessing regional focuses and gaps in support.
+
+Mailing addresses can be used to contact reporting businesses regarding missing or redundant data.
+
+**Sample of Geographic Data:**
+
+```{python}
+sub_data[['BA COUNTRY','BA STATE','BA CITY', 'BA ZIP CODE', 'BUSINESS ADDRESS', 'BUSINESS ADDRESS (CONT.)', 'MA COUNTRY', 'MA STATE', 'MA CITY', 'MA ZIP CODE', 'MAILING ADDRESS', 'MAILING ADDRESS (CONT.)', 'INCORPORATION COUNTRY', 'INCORPORATION STATE']].head()
+```
+
+### 4.3. Transparency and Accountability
+
+The Submission Data Report enables filtering based on WKSI status and submission detail, which reflect businesses' timeliness and accuracy in financial reporting. This step allows for the identification of businesses that maintain high standards of corporate governance and provide reliable information to market stakeholders.
+
+The Submission Data Report denotes an organization's submission detail with a boolean value (1 for true, 0 for false). TRUE indicates that the XBRL submission contains quantitative disclosures within the footnotes and schedules at the required detail level (e.g., each amount).
+
+**Sample of Submission Detail Data:**
+
+```{python}
+sub_data[['NAME','CONTAINS REQUIRED DETAIL']].head()
+```
+
+#### 4.3.1. Using WKSI Status
+
+The Submission Data Report denotes an organization's WKSI status with a boolean value (1 for true, 0 for false). To be a WKSI, an organization must meet the three criteria outlined in SEC Rule 405:
+
+1.  The issuer must meet the requirements of Form S-3. This requires that the issuer has (a) timely filed periodic reports for 12 calendar months and (b) not defaulted on any indebtedness or long-term leases.
+
+2.  The issuer has (a) over \$700 million in public float and (b) issued more than \$1 billion in principal of non-convertible debt securities in primary offerings.
+
+3.  The issuer is not an “ineligible issuer.” An issuer can be ineligible by, among other things, failing to meet their periodic reporting requirements, being a shell company, having filed for bankruptcy recently, or having been convicted of a felony or misdemeanor.
+
+You can find more information on law.cornell.edu ([www.law.cornell.edu/wex/well-known_seasoned_issuer\_(wksi)](https://www.law.cornell.edu/wex/well-known_seasoned_issuer_(wksi))).
+
+**Sample of WKSI Data:**
+
+```{python}
+sub_data[['NAME','WKSI']].head()
+```
+
+### 

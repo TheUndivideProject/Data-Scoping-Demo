@@ -1,0 +1,124 @@
+---
+title: "2024 Q1 Numeric Data Report"
+output:
+  quarto::html_document:
+    toc: true
+
+format:
+  html:
+    code-fold: true
+---
+
+## 1. Introduction
+
+This document aims to perform an initial exploration of the features and values within the Securities and Exchange Commission's Financial Statement Numbers to pinpoint variables for assessing philanthropic giving in the environmental and social justice sectors.
+
+The Financial Statement Numbers of the SEC provide numeric data from the face financials of all financial statements. You can find more information on sec.gov (https://www.sec.gov/dera/data/financial-statement).
+
+## 2. First Glance
+
+### 2.1. General Summary
+
+------------------------------------------------------------------------
+
+::: callout-note
+A '0' in the 'QUARTERS REPRESENTED' column indicates it is a point-in-time value.
+:::
+
+```{python}
+# libraries for data manipulation.
+import pandas as pd
+import numpy as np
+
+# libraries for data visualisation
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+import plotly.io as pio
+
+# libraries for quarto rendering
+from IPython.display import Markdown,display
+from tabulate import tabulate
+import plotly.io as pio
+
+# remove warnings
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
+# read in data from 'num.csv' in the 'data' folder
+num_data = pd.read_csv('../data/num.csv')
+
+# print data dimensions
+shape_caption = "Data Dimensions:"
+shape_df = pd.DataFrame({
+        'Dimension': ['Rows', 'Columns'],
+        'Count': [num_data.shape[0], num_data.shape[1]]
+    })
+shape_df['Count'] = shape_df['Count'].apply(lambda x: f"{x:,}")
+shape_markdown = shape_caption + "\n\n" + shape_df.to_markdown(index=False)
+display(Markdown(shape_markdown))
+
+# print a sample of the data
+first_five_rows_caption = "First Five Rows of Data:"
+first_five_rows_markdown = first_five_rows_caption + "\n\n" + num_data.head().to_markdown(index=False)
+display(Markdown(first_five_rows_markdown))
+
+# print metadata
+metadata_caption = "Metadata:"
+column_metadata = []
+
+for col in num_data.columns:
+    # gather metadata for each col
+    col_metadata = {
+        'Column Name': col,
+        'Data Type': str(num_data[col].dtype),
+        'Unique Values': num_data[col].nunique(),
+        'Missing Values': num_data[col].isnull().sum()
+    }
+    # append metadata to list
+    column_metadata.append(col_metadata)
+
+# convert list to pd df and then markdown table
+metadata_df = pd.DataFrame(column_metadata)
+metadata_df['Unique Values'] = metadata_df['Unique Values'].apply(lambda x: f"{x:,}")
+metadata_df['Missing Values'] = metadata_df['Missing Values'].apply(lambda x: f"{x:,}")
+metadata_markdown = metadata_caption + "\n\n" + metadata_df.to_markdown(index=False)
+display(Markdown(metadata_markdown))
+
+```
+
+### 2.2. Statistical Summary
+
+------------------------------------------------------------------------
+
+```{python}
+pd.options.display.float_format = '{:,.0f}'.format
+simple_md = num_data.describe()
+display(simple_md)
+```
+
+## 3. Data Preparation
+
+In this section, we outline the initial steps for preparing SEC Financial Statement Numbers for analysis. Our objectives include ensuring consistent column naming, handling missing values, and formatting data for analysis. Click the dropdown for code details.
+
+```{python}
+# convert columns to appropriate data types
+date_cols = ['END DATE']
+for col in date_cols:
+    num_data[col] = num_data[col].astype(str).str.replace('\.0$', '', regex=True)
+    num_data[col] = pd.to_datetime(num_data[col], format='%Y%m%d', errors='coerce').dt.date
+
+num_data['VALUE'] = num_data['VALUE'].round().astype('Int64')
+
+# replace missing values with nan
+num_data = num_data.fillna(np.nan)
+
+# show cleaned data.
+head_markdown = num_data.head().to_markdown(index=False)
+display(Markdown(head_markdown))
+
+```
+
+## 4. Analysis
+
+Objective: Determine if the Numeric Data Set can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.

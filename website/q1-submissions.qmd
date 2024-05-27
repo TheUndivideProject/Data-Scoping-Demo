@@ -11,7 +11,7 @@ format:
 
 ## 1. Introduction
 
-This document aims to perform an initial exploration of the features and values within the Securities and Exchange Committee's Financial Statement Submissions to pinpoint variables for assessing philanthropic giving in the environmental and social justice sectors.
+This document aims to perform an initial exploration of the features and values within the Securities and Exchange Commission's Financial Statement Submissions to pinpoint variables for assessing philanthropic giving in the environmental and social justice sectors.
 
 The Financial Statement Submissions of the SEC provide EDGAR information from the face financials of all financial statements. EDGAR is the SEC filing system that all public companies must use when filing documents with the Commission. This data was extracted from exhibits to corporate financial reports using eXtensible Business Reporting Language (XBRL). You can find more information on sec.gov (https://www.sec.gov/dera/data/financial-statement).
 
@@ -108,7 +108,7 @@ for col in date_cols:
 # replace missing values with nan
 sub_data = sub_data.fillna(np.nan)
 
-# show cleaned data.
+# show cleaned data
 head_markdown = sub_data.head().to_markdown(index=False)
 display(Markdown(head_markdown))
 
@@ -116,13 +116,13 @@ display(Markdown(head_markdown))
 
 ## 4. Analysis
 
-Objective: Determine if the Submission Data Report can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.
+Objective: Determine if the Submission Data Set can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.
 
 ### 4.1. Identification of Corporate Donors
 
-The Submission Data Report enables filtering based on Standard Industrial Classification codes, which indicate organizations' areas of focus and filing department. This step enables the identification of businesses focused on environmental protection and social justice and is crucial for creating a focused dataset of relevant businesses for our objective above.
+The Submission Data Set enables filtering based on Standard Industrial Classification codes, which indicate organizations' areas of focus and filing department. This step enables the identification of businesses focused on environmental protection and social justice and is crucial for creating a focused dataset of relevant businesses for our objective above.
 
-The Submission Data Report also includes the former names of reporting businesses, enabling access to historical data concerning them. This information is essential for ensuring the maintenance of accurate and consistent records.
+The Submission Data Set also includes the former names of reporting businesses, enabling access to historical data concerning them. This information is essential for ensuring the maintenance of accurate and consistent records.
 
 **Sample of Name Data:**
 
@@ -151,13 +151,39 @@ sic_code_data = {
   
 sic_code_df = pd.DataFrame(sic_code_data)
 
-# print sample
+# show sample
 display(sic_code_df)
+```
+
+#### 4.1.2. Using Filer Status
+
+Under the Securities Exchange Act of 1934, the SEC classifies publicly traded companies by filing status on the basis of their public float, which is a measure of their market capitalization. The Submission Data Set identifies three filing statuses: Large Accelerated Filer (1-LAF), Accelerated Filer (2-ACC), and Non-Accelerated Filer (4-NON).
+
+-   **Large Accelerated Filer (1-LAF)**: Companies with a market value exceeding \$700 million by the end of their second fiscal quarter.
+
+-   **Accelerated Filer (2-ACC)**: Companies with a market value of public shares between \$75 million and \$700 million, having filed regular reports for at least a year and submitted one annual report.
+
+-   **Non-Accelerated Filer (4-NON)**: Companies not meeting the criteria for accelerated or large accelerated filer status.
+
+**Sample of Filer Status Data:**
+
+```{python}
+
+# create a DataFrame with three columns ('1-LAF', '2-ACC', '4-NON') containing the top 5 names for each filer status
+filer_status_data = pd.DataFrame({
+    '1-LAF': sub_data.loc[sub_data['FILER STATUS'] == '1-LAF', 'NAME'].head(5).tolist(),
+    '2-ACC': sub_data.loc[sub_data['FILER STATUS'] == '2-ACC', 'NAME'].head(5).tolist(),
+    '4-NON': sub_data.loc[sub_data['FILER STATUS'] == '4-NON', 'NAME'].head(5).tolist()
+})
+
+# show sample
+display(filer_status_data)
+
 ```
 
 ### 4.2. Geographic Distribution
 
-The Submission Data Report includes fields for both business (where an organization's headquarters are) and mailing address (where an organization prefers to receive letters, notices, and legal documents).
+The Submission Data Set includes fields for both business (where an organization's headquarters are) and mailing address (where an organization prefers to receive letters, notices, and legal documents).
 
 Business addresses offer valuable insights into the geographic distribution of philanthropic efforts toward specific causes. This can aid in assessing regional focuses and gaps in support.
 
@@ -171,19 +197,30 @@ sub_data[['BA COUNTRY','BA STATE','BA CITY', 'BA ZIP CODE', 'BUSINESS ADDRESS', 
 
 ### 4.3. Transparency and Accountability
 
-The Submission Data Report enables filtering based on WKSI status and submission detail, which reflect businesses' timeliness and accuracy in financial reporting. This step allows for the identification of businesses that maintain high standards of corporate governance and provide reliable information to market stakeholders.
+The Submission Data Set enables filtering based on WKSI status and submission detail, which reflect businesses' timeliness and accuracy in financial reporting. This step allows for the identification of businesses that maintain high standards of corporate governance and provide reliable information to market stakeholders.
 
-The Submission Data Report denotes an organization's submission detail with a boolean value (1 for true, 0 for false). TRUE indicates that the XBRL submission contains quantitative disclosures within the footnotes and schedules at the required detail level (e.g., each amount).
+The Submission Data Set denotes an organization's submission detail with a boolean value (1 for true, 0 for false). TRUE indicates that the XBRL submission contains quantitative disclosures within the footnotes and schedules at the required detail level (e.g., each amount).
 
-**Sample of Submission Detail Data:**
+The relationship between filer status, WKSI status, and submission detail implies a connection between financial status and accountability. Large Accelerated Filers with WKSI status outnumber both normal Accelerated Filers and Non-Accelerated Filers by nearly 40 times. Yet, when it comes to the number of submissions with required detail, Regular Accelerated Filers lag behind both Large-Accelerated Filers and Non-Accelerated Filers.
 
 ```{python}
-sub_data[['NAME','CONTAINS REQUIRED DETAIL']].head()
+# aggregate counts of 'WKSI' and 'CONTAINS REQUIRED DETAIL' for each filer status
+aggregated_counts = sub_data.groupby('FILER STATUS').agg(
+    WKSI_count=('WKSI', 'sum'),
+    detail_count=('CONTAINS REQUIRED DETAIL', 'sum')
+).reset_index()
+
+# rename columns
+aggregated_counts.columns = ['Filer Status', 'Number of WKSIs', 'Number of Submissions Containing Required Detail']
+
+# show aggregated data
+display(aggregated_counts)
+
 ```
 
 #### 4.3.1. Using WKSI Status
 
-The Submission Data Report denotes an organization's WKSI status with a boolean value (1 for true, 0 for false). To be a WKSI, an organization must meet the three criteria outlined in SEC Rule 405:
+The Submission Data Set denotes an organization's WKSI status with a boolean value (1 for true, 0 for false). To be a WKSI, an organization must meet the three criteria outlined in SEC Rule 405:
 
 1.  The issuer must meet the requirements of Form S-3. This requires that the issuer has (a) timely filed periodic reports for 12 calendar months and (b) not defaulted on any indebtedness or long-term leases.
 
@@ -192,11 +229,3 @@ The Submission Data Report denotes an organization's WKSI status with a boolean 
 3.  The issuer is not an “ineligible issuer.” An issuer can be ineligible by, among other things, failing to meet their periodic reporting requirements, being a shell company, having filed for bankruptcy recently, or having been convicted of a felony or misdemeanor.
 
 You can find more information on law.cornell.edu ([www.law.cornell.edu/wex/well-known_seasoned_issuer\_(wksi)](https://www.law.cornell.edu/wex/well-known_seasoned_issuer_(wksi))).
-
-**Sample of WKSI Data:**
-
-```{python}
-sub_data[['NAME','WKSI']].head()
-```
-
-### 

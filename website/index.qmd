@@ -18,6 +18,6 @@ This project aims to:
 
 ## Website Structure
 
--   Financial Statement Data Sets
+-   Financial Statement Data Scoping
 
     -   Multiple pages documenting important fields in corporate financial reports and potential significance for dashboard.

@@ -131,6 +131,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../website/q1-submissions.html" rel="" target="">
  <span class="dropdown-text">2024 Q1 Submission Data Report</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../website/q1-numbers.html" rel="" target="">
+ <span class="dropdown-text">2024 Q1 Numeric Data Report</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -161,7 +165,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#identification-of-corporate-donors" id="toc-identification-of-corporate-donors" class="nav-link" data-scroll-target="#identification-of-corporate-donors">4.1. Identification of Corporate Donors</a></li>
   <li><a href="#geographic-distribution" id="toc-geographic-distribution" class="nav-link" data-scroll-target="#geographic-distribution">4.2. Geographic Distribution</a></li>
   <li><a href="#transparency-and-accountability" id="toc-transparency-and-accountability" class="nav-link" data-scroll-target="#transparency-and-accountability">4.3. Transparency and Accountability</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -188,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
-<p>This document aims to perform an initial exploration of the features and values within the Securities and Exchange Committee’s Financial Statement Submissions to pinpoint variables for assessing philanthropic giving in the environmental and social justice sectors.</p>
+<p>This document aims to perform an initial exploration of the features and values within the Securities and Exchange Commission’s Financial Statement Submissions to pinpoint variables for assessing philanthropic giving in the environmental and social justice sectors.</p>
 <p>The Financial Statement Submissions of the SEC provide EDGAR information from the face financials of all financial statements. EDGAR is the SEC filing system that all public companies must use when filing documents with the Commission. This data was extracted from exhibits to corporate financial reports using eXtensible Business Reporting Language (XBRL). You can find more information on sec.gov (https://www.sec.gov/dera/data/financial-statement).</p>
 </section>
 <section id="first-glance" class="level2">
@@ -970,7 +973,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># replace missing values with nan</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>sub_data <span class="op">=</span> sub_data.fillna(np.nan)</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># show cleaned data.</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># show cleaned data</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>head_markdown <span class="op">=</span> sub_data.head().to_markdown(index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>display(Markdown(head_markdown))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1162,7 +1165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">nan</td>
 <td style="text-align: left;">nan</td>
 <td style="text-align: left;">2024-02-14</td>
-<td style="text-align: left;">2024-05-20</td>
+<td style="text-align: left;">2024-05-27</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">ball-20240214x8k_htm.xml</td>
@@ -1200,7 +1203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">nan</td>
 <td style="text-align: left;">nan</td>
 <td style="text-align: left;">2024-02-14</td>
-<td style="text-align: left;">2024-05-20</td>
+<td style="text-align: left;">2024-05-27</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">bio-20240209_htm.xml</td>
@@ -1238,7 +1241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">nan</td>
 <td style="text-align: left;">nan</td>
 <td style="text-align: left;">2024-02-14</td>
-<td style="text-align: left;">2024-05-20</td>
+<td style="text-align: left;">2024-05-27</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">dbd-20240214_htm.xml</td>
@@ -1252,18 +1255,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="analysis" class="level2">
 <h2 class="anchored" data-anchor-id="analysis">4. Analysis</h2>
-<p>Objective: Determine if the Submission Data Report can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.</p>
+<p>Objective: Determine if the Submission Data Set can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.</p>
 <section id="identification-of-corporate-donors" class="level3">
 <h3 class="anchored" data-anchor-id="identification-of-corporate-donors">4.1. Identification of Corporate Donors</h3>
-<p>The Submission Data Report enables filtering based on Standard Industrial Classification codes, which indicate organizations’ areas of focus and filing department. This step enables the identification of businesses focused on environmental protection and social justice and is crucial for creating a focused dataset of relevant businesses for our objective above.</p>
-<p>The Submission Data Report also includes the former names of reporting businesses, enabling access to historical data concerning them. This information is essential for ensuring the maintenance of accurate and consistent records.</p>
+<p>The Submission Data Set enables filtering based on Standard Industrial Classification codes, which indicate organizations’ areas of focus and filing department. This step enables the identification of businesses focused on environmental protection and social justice and is crucial for creating a focused dataset of relevant businesses for our objective above.</p>
+<p>The Submission Data Set also includes the former names of reporting businesses, enabling access to historical data concerning them. This information is essential for ensuring the maintenance of accurate and consistent records.</p>
 <p><strong>Sample of Name Data:</strong></p>
 <div class="cell" data-execution_count="4">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sub_data[[<span class="st">'NAME'</span>,<span class="st">'FORMER NAME'</span>,<span class="st">'NAME CHANGE DATE'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -1332,7 +1335,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>sic_code_df <span class="op">=</span> pd.DataFrame(sic_code_data)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># print sample</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show sample</span></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>display(sic_code_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
@@ -1392,19 +1395,92 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-</section>
-<section id="geographic-distribution" class="level3">
-<h3 class="anchored" data-anchor-id="geographic-distribution">4.2. Geographic Distribution</h3>
-<p>The Submission Data Report includes fields for both business (where an organization’s headquarters are) and mailing address (where an organization prefers to receive letters, notices, and legal documents).</p>
-<p>Business addresses offer valuable insights into the geographic distribution of philanthropic efforts toward specific causes. This can aid in assessing regional focuses and gaps in support.</p>
-<p>Mailing addresses can be used to contact reporting businesses regarding missing or redundant data.</p>
-<p><strong>Sample of Geographic Data:</strong></p>
+<section id="using-filer-status" class="level4">
+<h4 class="anchored" data-anchor-id="using-filer-status">4.1.2. Using Filer Status</h4>
+<p>Under the Securities Exchange Act of 1934, the SEC classifies publicly traded companies by filing status on the basis of their public float, which is a measure of their market capitalization. The Submission Data Set identifies three filing statuses: Large Accelerated Filer (1-LAF), Accelerated Filer (2-ACC), and Non-Accelerated Filer (4-NON).</p>
+<ul>
+<li><p><strong>Large Accelerated Filer (1-LAF)</strong>: Companies with a market value exceeding $700 million by the end of their second fiscal quarter.</p></li>
+<li><p><strong>Accelerated Filer (2-ACC)</strong>: Companies with a market value of public shares between $75 million and $700 million, having filed regular reports for at least a year and submitted one annual report.</p></li>
+<li><p><strong>Non-Accelerated Filer (4-NON)</strong>: Companies not meeting the criteria for accelerated or large accelerated filer status.</p></li>
+</ul>
+<p><strong>Sample of Filer Status Data:</strong></p>
 <div class="cell" data-execution_count="6">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sub_data[[<span class="st">'BA COUNTRY'</span>,<span class="st">'BA STATE'</span>,<span class="st">'BA CITY'</span>, <span class="st">'BA ZIP CODE'</span>, <span class="st">'BUSINESS ADDRESS'</span>, <span class="st">'BUSINESS ADDRESS (CONT.)'</span>, <span class="st">'MA COUNTRY'</span>, <span class="st">'MA STATE'</span>, <span class="st">'MA CITY'</span>, <span class="st">'MA ZIP CODE'</span>, <span class="st">'MAILING ADDRESS'</span>, <span class="st">'MAILING ADDRESS (CONT.)'</span>, <span class="st">'INCORPORATION COUNTRY'</span>, <span class="st">'INCORPORATION STATE'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a DataFrame with three columns ('1-LAF', '2-ACC', '4-NON') containing the top 5 names for each filer status</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>filer_status_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'1-LAF'</span>: sub_data.loc[sub_data[<span class="st">'FILER STATUS'</span>] <span class="op">==</span> <span class="st">'1-LAF'</span>, <span class="st">'NAME'</span>].head(<span class="dv">5</span>).tolist(),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'2-ACC'</span>: sub_data.loc[sub_data[<span class="st">'FILER STATUS'</span>] <span class="op">==</span> <span class="st">'2-ACC'</span>, <span class="st">'NAME'</span>].head(<span class="dv">5</span>).tolist(),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'4-NON'</span>: sub_data.loc[sub_data[<span class="st">'FILER STATUS'</span>] <span class="op">==</span> <span class="st">'4-NON'</span>, <span class="st">'NAME'</span>].head(<span class="dv">5</span>).tolist()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># show sample</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>display(filer_status_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">1-LAF</th>
+<th data-quarto-table-cell-role="th">2-ACC</th>
+<th data-quarto-table-cell-role="th">4-NON</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>AMERICAN INTERNATIONAL GROUP, INC.</td>
+<td>DIEBOLD NIXDORF, INC</td>
+<td>FORD MOTOR CREDIT CO LLC</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>ASSOCIATED BANC-CORP</td>
+<td>MITEK SYSTEMS INC</td>
+<td>SIFCO INDUSTRIES INC</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>BALL CORP</td>
+<td>VROOM, INC.</td>
+<td>SIFCO INDUSTRIES INC</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>BIO-RAD LABORATORIES, INC.</td>
+<td>VELOCITY FINANCIAL, INC.</td>
+<td>FONAR CORP</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>EQT CORP</td>
+<td>NETGEAR, INC.</td>
+<td>CSP INC /MA/</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="geographic-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="geographic-distribution">4.2. Geographic Distribution</h3>
+<p>The Submission Data Set includes fields for both business (where an organization’s headquarters are) and mailing address (where an organization prefers to receive letters, notices, and legal documents).</p>
+<p>Business addresses offer valuable insights into the geographic distribution of philanthropic efforts toward specific causes. This can aid in assessing regional focuses and gaps in support.</p>
+<p>Mailing addresses can be used to contact reporting businesses regarding missing or redundant data.</p>
+<p><strong>Sample of Geographic Data:</strong></p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sub_data[[<span class="st">'BA COUNTRY'</span>,<span class="st">'BA STATE'</span>,<span class="st">'BA CITY'</span>, <span class="st">'BA ZIP CODE'</span>, <span class="st">'BUSINESS ADDRESS'</span>, <span class="st">'BUSINESS ADDRESS (CONT.)'</span>, <span class="st">'MA COUNTRY'</span>, <span class="st">'MA STATE'</span>, <span class="st">'MA CITY'</span>, <span class="st">'MA ZIP CODE'</span>, <span class="st">'MAILING ADDRESS'</span>, <span class="st">'MAILING ADDRESS (CONT.)'</span>, <span class="st">'INCORPORATION COUNTRY'</span>, <span class="st">'INCORPORATION STATE'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -1523,15 +1599,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="transparency-and-accountability" class="level3">
 <h3 class="anchored" data-anchor-id="transparency-and-accountability">4.3. Transparency and Accountability</h3>
-<p>The Submission Data Report enables filtering based on WKSI status and submission detail, which reflect businesses’ timeliness and accuracy in financial reporting. This step allows for the identification of businesses that maintain high standards of corporate governance and provide reliable information to market stakeholders.</p>
-<p>The Submission Data Report denotes an organization’s submission detail with a boolean value (1 for true, 0 for false). TRUE indicates that the XBRL submission contains quantitative disclosures within the footnotes and schedules at the required detail level (e.g., each amount).</p>
-<p><strong>Sample of Submission Detail Data:</strong></p>
-<div class="cell" data-execution_count="7">
+<p>The Submission Data Set enables filtering based on WKSI status and submission detail, which reflect businesses’ timeliness and accuracy in financial reporting. This step allows for the identification of businesses that maintain high standards of corporate governance and provide reliable information to market stakeholders.</p>
+<p>The Submission Data Set denotes an organization’s submission detail with a boolean value (1 for true, 0 for false). TRUE indicates that the XBRL submission contains quantitative disclosures within the footnotes and schedules at the required detail level (e.g., each amount).</p>
+<p>The relationship between filer status, WKSI status, and submission detail implies a connection between financial status and accountability. Large Accelerated Filers with WKSI status outnumber both normal Accelerated Filers and Non-Accelerated Filers by nearly 40 times. Yet, when it comes to the number of submissions with required detail, Regular Accelerated Filers lag behind both Large-Accelerated Filers and Non-Accelerated Filers.</p>
+<div class="cell" data-execution_count="8">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sub_data[[<span class="st">'NAME'</span>,<span class="st">'CONTAINS REQUIRED DETAIL'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate counts of 'WKSI' and 'CONTAINS REQUIRED DETAIL' for each filer status</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>aggregated_counts <span class="op">=</span> sub_data.groupby(<span class="st">'FILER STATUS'</span>).agg(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    WKSI_count<span class="op">=</span>(<span class="st">'WKSI'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    detail_count<span class="op">=</span>(<span class="st">'CONTAINS REQUIRED DETAIL'</span>, <span class="st">'sum'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># rename columns</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>aggregated_counts.columns <span class="op">=</span> [<span class="st">'Filer Status'</span>, <span class="st">'Number of WKSIs'</span>, <span class="st">'Number of Submissions Containing Required Detail'</span>]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># show aggregated data</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>display(aggregated_counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="45">
+<div class="cell-output cell-output-display">
 <div>
 
 
@@ -1539,35 +1625,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">NAME</th>
-<th data-quarto-table-cell-role="th">CONTAINS REQUIRED DETAIL</th>
+<th data-quarto-table-cell-role="th">Filer Status</th>
+<th data-quarto-table-cell-role="th">Number of WKSIs</th>
+<th data-quarto-table-cell-role="th">Number of Submissions Containing Required Detail</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>AMERICAN INTERNATIONAL GROUP, INC.</td>
-<td>1</td>
+<td>1-LAF</td>
+<td>1749</td>
+<td>2259</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>ASSOCIATED BANC-CORP</td>
-<td>0</td>
+<td>2-ACC</td>
+<td>46</td>
+<td>813</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>BALL CORP</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>BIO-RAD LABORATORIES, INC.</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>DIEBOLD NIXDORF, INC</td>
-<td>0</td>
+<td>4-NON</td>
+<td>39</td>
+<td>2822</td>
 </tr>
 </tbody>
 </table>
@@ -1577,69 +1657,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="using-wksi-status" class="level4">
 <h4 class="anchored" data-anchor-id="using-wksi-status">4.3.1. Using WKSI Status</h4>
-<p>The Submission Data Report denotes an organization’s WKSI status with a boolean value (1 for true, 0 for false). To be a WKSI, an organization must meet the three criteria outlined in SEC Rule 405:</p>
+<p>The Submission Data Set denotes an organization’s WKSI status with a boolean value (1 for true, 0 for false). To be a WKSI, an organization must meet the three criteria outlined in SEC Rule 405:</p>
 <ol type="1">
 <li><p>The issuer must meet the requirements of Form S-3. This requires that the issuer has (a) timely filed periodic reports for 12 calendar months and (b) not defaulted on any indebtedness or long-term leases.</p></li>
 <li><p>The issuer has (a) over $700 million in public float and (b) issued more than $1 billion in principal of non-convertible debt securities in primary offerings.</p></li>
 <li><p>The issuer is not an “ineligible issuer.” An issuer can be ineligible by, among other things, failing to meet their periodic reporting requirements, being a shell company, having filed for bankruptcy recently, or having been convicted of a felony or misdemeanor.</p></li>
 </ol>
 <p>You can find more information on law.cornell.edu (<a href="https://www.law.cornell.edu/wex/well-known_seasoned_issuer_(wksi)">www.law.cornell.edu/wex/well-known_seasoned_issuer_(wksi)</a>).</p>
-<p><strong>Sample of WKSI Data:</strong></p>
-<div class="cell" data-execution_count="8">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sub_data[[<span class="st">'NAME'</span>,<span class="st">'WKSI'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="46">
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">NAME</th>
-<th data-quarto-table-cell-role="th">WKSI</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>AMERICAN INTERNATIONAL GROUP, INC.</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>ASSOCIATED BANC-CORP</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>BALL CORP</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>BIO-RAD LABORATORIES, INC.</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>DIEBOLD NIXDORF, INC</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
 </section>
-</section>
-<section id="section" class="level3">
-<h3 class="anchored" data-anchor-id="section"></h3>
-
-
 </section>
 </section>
 

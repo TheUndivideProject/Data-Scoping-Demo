@@ -160,7 +160,6 @@ Each submission's 'FINANCIAL ELEMENT' column specifies either a standard or cust
 import re
 
 expense_ids = ['AccountingFees', 'InterestExpense', 'LegalFees']
-
 expense_stats = pd.DataFrame()
 
 # add statistics for each identifier to combined DataFrame
@@ -176,8 +175,6 @@ display(expense_stats)
 **Governance & Compliance Expenses Stats:**
 
 ```{python}
-import re
-
 compensation_ids = ['DeferredCompensationLiabilityCurrent', 'DeferredCompensationEquity', 'DeferredCompensationPlanAssets']
 compensation_stats = pd.DataFrame()
 
@@ -209,7 +206,6 @@ display(compensation_stats)
 
 ```{python}
 assets_ids = ['AssetsCurrent', 'AssetsHeldForSaleNotPartOfDisposalGroupCurrent', 'TradingSecurities']
-
 assets_stats = pd.DataFrame()
 
 # add statistics for each identifier to combined DataFrame
@@ -226,10 +222,8 @@ display(assets_stats)
 
 ```{python}
 liabilities_ids = ['LiabilitiesCurrent']
-
 liabilities_stats = pd.DataFrame()
 
-# add statistics for each identifier to combined DataFrame
 # add statistics for each identifier to combined DataFrame
 for id in liabilities_ids:
     filtered_liabilities_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
@@ -244,7 +238,6 @@ display(liabilities_stats)
 
 ```{python}
 investments_ids = ['ShortTermInvestments', 'LongTermInvestments']
-
 investments_stats = pd.DataFrame()
 
 # add statistics for each identifier to combined DataFrame
@@ -278,7 +271,6 @@ display(investments_stats)
 
 ```{python}
 operating_revenue_ids = ['Revenues', 'GrossInvestmentIncomeOperating', 'LeaseIncome', 'InterestIncomeSecuritiesTaxable']
-
 operating_revenue_stats = pd.DataFrame()
 
 # add statistics for each identifier to combined DataFrame
@@ -296,7 +288,6 @@ display(operating_revenue_stats)
 
 ```{python}
 other_revenue_ids = ['ProceedsFromGrantors', 'ProceedsFromCustomers', 'ProceedsFromOtherDeposits']
-
 other_revenue_stats = pd.DataFrame()
 
 # add statistics for each identifier to combined DataFrame
@@ -320,7 +311,6 @@ display(other_revenue_stats)
 
 ```{python}
 philanthropic_giving_ids = ['CharitableContributions', 'CharitableContributionsExpense', 'EffectiveIncomeTaxRateReconciliationNondeductibleExpenseCharitableContributions']
-
 philanthropic_giving_stats = pd.DataFrame()
 
 # add statistics for each identifier to combined DataFrame

@@ -120,6 +120,8 @@ Objective: Determine if the Submission Data Set can (1) be used to conduct a com
 
 ### 4.1. Identification of Corporate Donors
 
+------------------------------------------------------------------------
+
 The Submission Data Set enables filtering based on Standard Industrial Classification codes, which indicate organizations' areas of focus and filing department. This step enables the identification of businesses focused on environmental protection and social justice and is crucial for creating a focused dataset of relevant businesses for our objective above.
 
 The Submission Data Set also includes the former names of reporting businesses, enabling access to historical data concerning them. This information is essential for ensuring the maintenance of accurate and consistent records.
@@ -130,7 +132,7 @@ The Submission Data Set also includes the former names of reporting businesses, 
 sub_data[['NAME','FORMER NAME','NAME CHANGE DATE']].head()
 ```
 
-#### 4.1.1. Using Standard Industrial Classification Codes
+#### **4.1.1. Using Standard Industrial Classification Codes**
 
 Standard Industrial Classification (SIC) codes are three or four-digit numerical codes that categorize the industries that companies belong to based on their business activities. The first two digits represent the highest level business classification, while the subsequent two digits are used to further refine the identification.
 
@@ -155,7 +157,7 @@ sic_code_df = pd.DataFrame(sic_code_data)
 display(sic_code_df)
 ```
 
-#### 4.1.2. Using Filer Status
+#### **4.1.2. Using Filer Status**
 
 Under the Securities Exchange Act of 1934, the SEC classifies publicly traded companies by filing status on the basis of their public float, which is a measure of their market capitalization. The Submission Data Set identifies three filing statuses: Large Accelerated Filer (1-LAF), Accelerated Filer (2-ACC), and Non-Accelerated Filer (4-NON).
 
@@ -183,6 +185,8 @@ display(filer_status_data)
 
 ### 4.2. Geographic Distribution
 
+------------------------------------------------------------------------
+
 The Submission Data Set includes fields for both business (where an organization's headquarters are) and mailing address (where an organization prefers to receive letters, notices, and legal documents).
 
 Business addresses offer valuable insights into the geographic distribution of philanthropic efforts toward specific causes. This can aid in assessing regional focuses and gaps in support.
@@ -196,6 +200,8 @@ sub_data[['BA COUNTRY','BA STATE','BA CITY', 'BA ZIP CODE', 'BUSINESS ADDRESS', 
 ```
 
 ### 4.3. Transparency and Accountability
+
+------------------------------------------------------------------------
 
 The Submission Data Set enables filtering based on WKSI status and submission detail, which reflect businesses' timeliness and accuracy in financial reporting. This step allows for the identification of businesses that maintain high standards of corporate governance and provide reliable information to market stakeholders.
 
@@ -218,7 +224,7 @@ display(aggregated_counts)
 
 ```
 
-#### 4.3.1. Using WKSI Status
+#### **4.3.1. Using WKSI Status**
 
 The Submission Data Set denotes an organization's WKSI status with a boolean value (1 for true, 0 for false). To be a WKSI, an organization must meet the three criteria outlined in SEC Rule 405:
 

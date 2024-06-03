@@ -113,7 +113,7 @@ num_data['VALUE'] = num_data['VALUE'].round().astype('Int64')
 # replace missing values with nan
 num_data = num_data.fillna(np.nan)
 
-# show cleaned data.
+# show cleaned data
 head_markdown = num_data.head().to_markdown(index=False)
 display(Markdown(head_markdown))
 
@@ -122,3 +122,215 @@ display(Markdown(head_markdown))
 ## 4. Analysis
 
 Objective: Determine if the Numeric Data Set can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.
+
+### 4.1. Identification of Corporate Donors
+
+------------------------------------------------------------------------
+
+The Numeric Data Set contains accession numbers, unique 20-digit identifiers assigned to issuers in the Q1 Submissions Data Set. This allows comparison of numeric data from each issuer with geographic, temporal, and other data in the Submissions Data Set.
+
+**Sample of Accession Numbers:**
+
+```{python}
+num_data[['ACCESSION NUMBER']].head()
+```
+
+### 4.2. Financial Information
+
+------------------------------------------------------------------------
+
+Each submission's 'FINANCIAL ELEMENT' column specifies either a standard or custom tag. The standard tags are sourced from taxonomies on <https://www.sec.gov/edgar/information-for-filers/standard-taxonomies> and can be searched under [US GAAP (2023)](https://xbrlview.fasb.org).
+
+#### **4.2.1. Expenses**
+
+-   **Accounting Fees:** provides insights into the organization's financial oversight and auditing practices. High fees can be associated with rigorous procedures.
+
+```{=html}
+<!-- -->
+```
+-   **Deferred Compensation Liability, Deferred Compensation Equity, Deferred Compensation Plan Assets:** provide insights into the organization's budget allocation for leadership compensation.
+
+-   **Interest Expense:** provides insights into the organization's debt levels, which can inform assessments of financial health.
+
+-   **Legal Fees:** provides insights into the organization's legal compliance and potential litigation challenges. High fees can be associated with either.
+
+**Operational Expenses Stats:**
+
+```{python}
+import re
+
+expense_ids = ['AccountingFees', 'InterestExpense', 'LegalFees']
+
+expense_stats = pd.DataFrame()
+
+# add statistics for each identifier to combined DataFrame
+for id in expense_ids:
+    filtered_expense_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
+    stats = filtered_expense_ids['VALUE'].describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+    expense_stats = pd.concat([expense_stats, stats], axis=1)
+
+# show statistics
+display(expense_stats)
+```
+
+**Governance & Compliance Expenses Stats:**
+
+```{python}
+import re
+
+compensation_ids = ['DeferredCompensationLiabilityCurrent', 'DeferredCompensationEquity', 'DeferredCompensationPlanAssets']
+compensation_stats = pd.DataFrame()
+
+# add statistics for each identifier to combined DataFrame
+for id in compensation_ids:
+    filtered_compensation_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
+    stats = filtered_compensation_ids['VALUE'].describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+    compensation_stats = pd.concat([compensation_stats, stats], axis=1)
+
+# show statistics
+display(compensation_stats)
+```
+
+#### **4.2.2. Assets and Liabilities**
+
+-   Current Assets
+
+-   Assets Held for Sale
+
+-   Trading Securities
+
+-   Current Liabilities
+
+-   Short Term Investments
+
+-   Long Term Investments
+
+**Assets Stats:**
+
+```{python}
+assets_ids = ['AssetsCurrent', 'AssetsHeldForSaleNotPartOfDisposalGroupCurrent', 'TradingSecurities']
+
+assets_stats = pd.DataFrame()
+
+# add statistics for each identifier to combined DataFrame
+for id in assets_ids:
+    filtered_assets_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
+    stats = filtered_assets_ids['VALUE'].describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+    assets_stats = pd.concat([assets_stats, stats], axis=1)
+
+# show statistics
+display(assets_stats)
+```
+
+**Liabilities Stats:**
+
+```{python}
+liabilities_ids = ['LiabilitiesCurrent']
+
+liabilities_stats = pd.DataFrame()
+
+# add statistics for each identifier to combined DataFrame
+# add statistics for each identifier to combined DataFrame
+for id in liabilities_ids:
+    filtered_liabilities_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
+    stats = filtered_liabilities_ids['VALUE'].describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+    liabilities_stats = pd.concat([liabilities_stats, stats], axis=1)
+
+# show statistics
+display(liabilities_stats)
+```
+
+**Investments Stats:**
+
+```{python}
+investments_ids = ['ShortTermInvestments', 'LongTermInvestments']
+
+investments_stats = pd.DataFrame()
+
+# add statistics for each identifier to combined DataFrame
+for id in investments_ids:
+    filtered_investments_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
+    stats = filtered_investments_ids['VALUE'].describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+    investments_stats = pd.concat([investments_stats, stats], axis=1)
+
+
+# show statistics
+display(investments_stats)
+```
+
+#### **4.2.3. Revenue**
+
+-   Revenues
+
+-   Gross Investment Income
+
+-   Lease income
+
+-   Interest Income on Securities
+
+-   Proceeds from Grantors
+
+-   Proceeds from Customers
+
+-   Proceeds from Other Deposits
+
+**Operating Revenue Stats:**
+
+```{python}
+operating_revenue_ids = ['Revenues', 'GrossInvestmentIncomeOperating', 'LeaseIncome', 'InterestIncomeSecuritiesTaxable']
+
+operating_revenue_stats = pd.DataFrame()
+
+# add statistics for each identifier to combined DataFrame
+for id in operating_revenue_ids:
+    filtered_operating_revenue_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
+    stats = filtered_operating_revenue_ids['VALUE'].describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+    operating_revenue_stats = pd.concat([operating_revenue_stats, stats], axis=1)
+
+
+# show statistics
+display(operating_revenue_stats)
+```
+
+**Other Revenue Stats:**
+
+```{python}
+other_revenue_ids = ['ProceedsFromGrantors', 'ProceedsFromCustomers', 'ProceedsFromOtherDeposits']
+
+other_revenue_stats = pd.DataFrame()
+
+# add statistics for each identifier to combined DataFrame
+for id in other_revenue_ids:
+    filtered_other_revenue_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
+    stats = filtered_other_revenue_ids['VALUE'].describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+    other_revenue_stats = pd.concat([other_revenue_stats, stats], axis=1)
+
+
+# show statistics
+display(other_revenue_stats)
+```
+
+#### **4.2.4. Philanthropic Giving**
+
+-   Charitable Contributions, Charitable Contributions Expense
+
+-   Effective Income Tax Rate Reconciliation
+
+**Philanthropic Giving Stats:**
+
+```{python}
+philanthropic_giving_ids = ['CharitableContributions', 'CharitableContributionsExpense', 'EffectiveIncomeTaxRateReconciliationNondeductibleExpenseCharitableContributions']
+
+philanthropic_giving_stats = pd.DataFrame()
+
+# add statistics for each identifier to combined DataFrame
+for id in philanthropic_giving_ids:
+    filtered_philanthropic_giving_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
+    stats = filtered_philanthropic_giving_ids['VALUE'].describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+    philanthropic_giving_stats = pd.concat([philanthropic_giving_stats, stats], axis=1)
+
+
+# show statistics
+display(philanthropic_giving_stats)
+
+```

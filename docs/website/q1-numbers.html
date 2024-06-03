@@ -160,7 +160,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#statistical-summary" id="toc-statistical-summary" class="nav-link" data-scroll-target="#statistical-summary">2.2. Statistical Summary</a></li>
   </ul></li>
   <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">3. Data Preparation</a></li>
-  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">4. Analysis</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">4. Analysis</a>
+  <ul class="collapse">
+  <li><a href="#identification-of-corporate-donors" id="toc-identification-of-corporate-donors" class="nav-link" data-scroll-target="#identification-of-corporate-donors">4.1. Identification of Corporate Donors</a></li>
+  <li><a href="#financial-information" id="toc-financial-information" class="nav-link" data-scroll-target="#financial-information">4.2. Financial Information</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -550,7 +554,7 @@ Note
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># replace missing values with nan</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>num_data <span class="op">=</span> num_data.fillna(np.nan)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show cleaned data.</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show cleaned data</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>head_markdown <span class="op">=</span> num_data.head().to_markdown(index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>display(Markdown(head_markdown))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -644,8 +648,774 @@ Note
 <section id="analysis" class="level2">
 <h2 class="anchored" data-anchor-id="analysis">4. Analysis</h2>
 <p>Objective: Determine if the Numeric Data Set can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.</p>
+<section id="identification-of-corporate-donors" class="level3">
+<h3 class="anchored" data-anchor-id="identification-of-corporate-donors">4.1. Identification of Corporate Donors</h3>
+<hr>
+<p>The Numeric Data Set contains accession numbers, unique 20-digit identifiers assigned to issuers in the Q1 Submissions Data Set. This allows comparison of numeric data from each issuer with geographic, temporal, and other data in the Submissions Data Set.</p>
+<p><strong>Sample of Accession Numbers:</strong></p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>num_data[[<span class="st">'ACCESSION NUMBER'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="134">
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ACCESSION NUMBER</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0000897101-24-000070</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0000897101-24-000070</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0000897101-24-000070</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0000897101-24-000070</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0000897101-24-000070</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="financial-information" class="level3">
+<h3 class="anchored" data-anchor-id="financial-information">4.2. Financial Information</h3>
+<hr>
+<p>Each submission’s ‘FINANCIAL ELEMENT’ column specifies either a standard or custom tag. The standard tags are sourced from taxonomies on&nbsp;<a href="https://www.sec.gov/edgar/information-for-filers/standard-taxonomies" class="uri">https://www.sec.gov/edgar/information-for-filers/standard-taxonomies</a> and can be searched under <a href="https://xbrlview.fasb.org">US GAAP (2023)</a>.</p>
+<section id="expenses" class="level4">
+<h4 class="anchored" data-anchor-id="expenses"><strong>4.2.1. Expenses</strong></h4>
+<ul>
+<li><strong>Accounting Fees:</strong>&nbsp;provides insights into the organization’s financial oversight and auditing practices. High fees can be associated with rigorous procedures.</li>
+</ul>
+<!-- -->
+<ul>
+<li><p><strong>Deferred Compensation Liability, Deferred Compensation Equity, Deferred Compensation Plan Assets:</strong>&nbsp;provide insights into the organization’s budget allocation for leadership compensation.</p></li>
+<li><p><strong>Interest Expense:</strong>&nbsp;provides insights into the organization’s debt levels, which can inform assessments of financial health.</p></li>
+<li><p><strong>Legal Fees:</strong>&nbsp;provides insights into the organization’s legal compliance and potential litigation challenges. High fees can be associated with either.</p></li>
+</ul>
+<p><strong>Operational Expenses Stats:</strong></p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>expense_ids <span class="op">=</span> [<span class="st">'AccountingFees'</span>, <span class="st">'InterestExpense'</span>, <span class="st">'LegalFees'</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>expense_stats <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> expense_ids:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    filtered_expense_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_expense_ids[<span class="st">'VALUE'</span>].describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    expense_stats <span class="op">=</span> pd.concat([expense_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>display(expense_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Accounting Fees</th>
+<th data-quarto-table-cell-role="th">Interest Expense</th>
+<th data-quarto-table-cell-role="th">Legal Fees</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>3</td>
+<td>3,894</td>
+<td>247</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>1,833,000</td>
+<td>486,416,507</td>
+<td>3,682,251</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>256,650</td>
+<td>4,809,095,239</td>
+<td>10,808,987</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>1,538,000</td>
+<td>-155,300,000</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>1,747,000</td>
+<td>301,405</td>
+<td>67,207</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>1,956,000</td>
+<td>8,040,000</td>
+<td>314,000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>1,980,500</td>
+<td>80,986,750</td>
+<td>2,105,202</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>2,005,000</td>
+<td>139,000,000,000</td>
+<td>100,000,000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>Governance &amp; Compliance Expenses Stats:</strong></p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>compensation_ids <span class="op">=</span> [<span class="st">'DeferredCompensationLiabilityCurrent'</span>, <span class="st">'DeferredCompensationEquity'</span>, <span class="st">'DeferredCompensationPlanAssets'</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>compensation_stats <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> compensation_ids:</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    filtered_compensation_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_compensation_ids[<span class="st">'VALUE'</span>].describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    compensation_stats <span class="op">=</span> pd.concat([compensation_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>display(compensation_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Deferred Compensation Liability Current</th>
+<th data-quarto-table-cell-role="th">Deferred Compensation Equity</th>
+<th data-quarto-table-cell-role="th">Deferred Compensation Plan Assets</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>72</td>
+<td>19</td>
+<td>77</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>172,776,380</td>
+<td>7,237,125</td>
+<td>54,697,111</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>563,175,480</td>
+<td>10,106,407</td>
+<td>71,593,910</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0</td>
+<td>0</td>
+<td>41,000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>379,759</td>
+<td>1,104,500</td>
+<td>12,000,000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>1,579,799</td>
+<td>5,498,845</td>
+<td>26,838,000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>15,362,500</td>
+<td>8,350,000</td>
+<td>55,605,000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>2,900,000,000</td>
+<td>37,551,000</td>
+<td>283,600,000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="assets-and-liabilities" class="level4">
+<h4 class="anchored" data-anchor-id="assets-and-liabilities"><strong>4.2.2. Assets and Liabilities</strong></h4>
+<ul>
+<li><p>Current Assets</p></li>
+<li><p>Assets Held for Sale</p></li>
+<li><p>Trading Securities</p></li>
+<li><p>Current Liabilities</p></li>
+<li><p>Short Term Investments</p></li>
+<li><p>Long Term Investments</p></li>
+</ul>
+<p><strong>Assets Stats:</strong></p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>assets_ids <span class="op">=</span> [<span class="st">'AssetsCurrent'</span>, <span class="st">'AssetsHeldForSaleNotPartOfDisposalGroupCurrent'</span>, <span class="st">'TradingSecurities'</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>assets_stats <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> assets_ids:</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    filtered_assets_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_assets_ids[<span class="st">'VALUE'</span>].describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    assets_stats <span class="op">=</span> pd.concat([assets_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>display(assets_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Assets Current</th>
+<th data-quarto-table-cell-role="th">Assets Held For Sale Not Part Of Disposal Group Current</th>
+<th data-quarto-table-cell-role="th">Trading Securities</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>3,602</td>
+<td>86</td>
+<td>77</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>2,454,613,166</td>
+<td>7,951,949</td>
+<td>8,309,592,185</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>11,362,807,006</td>
+<td>17,436,472</td>
+<td>45,790,094,289</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>2,938,270</td>
+<td>486,222</td>
+<td>6,613,000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>71,265,500</td>
+<td>2,000,000</td>
+<td>95,200,000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>875,980,250</td>
+<td>4,997,521</td>
+<td>944,000,000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>230,000,000,000</td>
+<td>122,000,000</td>
+<td>296,000,000,000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>Liabilities Stats:</strong></p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>liabilities_ids <span class="op">=</span> [<span class="st">'LiabilitiesCurrent'</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>liabilities_stats <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> liabilities_ids:</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    filtered_liabilities_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_liabilities_ids[<span class="st">'VALUE'</span>].describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    liabilities_stats <span class="op">=</span> pd.concat([liabilities_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>display(liabilities_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Liabilities Current</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>3,572</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>1,986,486,408</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>8,750,912,802</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>3,677,071</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>28,150,500</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>511,032,500</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>145,000,000,000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>Investments Stats:</strong></p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>investments_ids <span class="op">=</span> [<span class="st">'ShortTermInvestments'</span>, <span class="st">'LongTermInvestments'</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>investments_stats <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> investments_ids:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    filtered_investments_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_investments_ids[<span class="st">'VALUE'</span>].describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    investments_stats <span class="op">=</span> pd.concat([investments_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>display(investments_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Short Term Investments</th>
+<th data-quarto-table-cell-role="th">Long Term Investments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>428</td>
+<td>245</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>1,576,787,310</td>
+<td>2,290,913,345</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>11,258,217,447</td>
+<td>7,549,154,877</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>3,869,090</td>
+<td>4,572,243</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>37,842,500</td>
+<td>40,486,000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>231,731,000</td>
+<td>559,000,000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>169,000,000,000</td>
+<td>55,297,000,000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="revenue" class="level4">
+<h4 class="anchored" data-anchor-id="revenue"><strong>4.2.3. Revenue</strong></h4>
+<ul>
+<li><p>Revenues</p></li>
+<li><p>Gross Investment Income</p></li>
+<li><p>Lease income</p></li>
+<li><p>Interest Income on Securities</p></li>
+<li><p>Proceeds from Grantors</p></li>
+<li><p>Proceeds from Customers</p></li>
+<li><p>Proceeds from Other Deposits</p></li>
+</ul>
+<p><strong>Operating Revenue Stats:</strong></p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>operating_revenue_ids <span class="op">=</span> [<span class="st">'Revenues'</span>, <span class="st">'GrossInvestmentIncomeOperating'</span>, <span class="st">'LeaseIncome'</span>, <span class="st">'InterestIncomeSecuritiesTaxable'</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>operating_revenue_stats <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> operating_revenue_ids:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    filtered_operating_revenue_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_operating_revenue_ids[<span class="st">'VALUE'</span>].describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    operating_revenue_stats <span class="op">=</span> pd.concat([operating_revenue_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>display(operating_revenue_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Revenues</th>
+<th data-quarto-table-cell-role="th">Gross Investment Income Operating</th>
+<th data-quarto-table-cell-role="th">Lease Income</th>
+<th data-quarto-table-cell-role="th">Interest Income Securities Taxable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>2,923</td>
+<td>116</td>
+<td>158</td>
+<td>194</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>8,291,213,969</td>
+<td>447,796,305</td>
+<td>8,074,617,613</td>
+<td>307,511,428</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>62,884,126,380</td>
+<td>851,936,168</td>
+<td>52,410,587,954</td>
+<td>1,569,004,992</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>-2,110,039,000</td>
+<td>0</td>
+<td>0</td>
+<td>212,000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>2,059,500</td>
+<td>21,903,000</td>
+<td>7,250,000</td>
+<td>5,079,000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>68,542,000</td>
+<td>113,211,173</td>
+<td>124,983,500</td>
+<td>13,715,000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>1,901,900,000</td>
+<td>372,975,000</td>
+<td>601,930,500</td>
+<td>50,086,000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>2,040,000,000,000</td>
+<td>4,046,000,000</td>
+<td>460,000,000,000</td>
+<td>17,390,000,000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>Other Revenue Stats:</strong></p>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>other_revenue_ids <span class="op">=</span> [<span class="st">'ProceedsFromGrantors'</span>, <span class="st">'ProceedsFromCustomers'</span>, <span class="st">'ProceedsFromOtherDeposits'</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>other_revenue_stats <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> other_revenue_ids:</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    filtered_other_revenue_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_other_revenue_ids[<span class="st">'VALUE'</span>].describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    other_revenue_stats <span class="op">=</span> pd.concat([other_revenue_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>display(other_revenue_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Proceeds From Grantors</th>
+<th data-quarto-table-cell-role="th">Proceeds From Customers</th>
+<th data-quarto-table-cell-role="th">Proceeds From Other Deposits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>3</td>
+<td>7</td>
+<td>19</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>146,566,667</td>
+<td>1,267,314,000</td>
+<td>167,590,737</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>239,226,803</td>
+<td>1,396,524,461</td>
+<td>278,773,181</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>2,000,000</td>
+<td>60,000</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>8,500,000</td>
+<td>198,000,000</td>
+<td>4,015</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>15,000,000</td>
+<td>205,000,000</td>
+<td>2,666,000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>218,850,000</td>
+<td>2,691,824,500</td>
+<td>254,000,000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>422,700,000</td>
+<td>2,886,489,000</td>
+<td>774,000,000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="philanthropic-giving" class="level4">
+<h4 class="anchored" data-anchor-id="philanthropic-giving"><strong>4.2.4. Philanthropic Giving</strong></h4>
+<ul>
+<li><p>Charitable Contributions, Charitable Contributions Expense</p></li>
+<li><p>Effective Income Tax Rate Reconciliation</p></li>
+</ul>
+<p><strong>Philanthropic Giving Stats:</strong></p>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>philanthropic_giving_ids <span class="op">=</span> [<span class="st">'CharitableContributions'</span>, <span class="st">'CharitableContributionsExpense'</span>, <span class="st">'EffectiveIncomeTaxRateReconciliationNondeductibleExpenseCharitableContributions'</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>philanthropic_giving_stats <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> philanthropic_giving_ids:</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    filtered_philanthropic_giving_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_philanthropic_giving_ids[<span class="st">'VALUE'</span>].describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    philanthropic_giving_stats <span class="op">=</span> pd.concat([philanthropic_giving_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>display(philanthropic_giving_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Charitable Contributions</th>
+<th data-quarto-table-cell-role="th">Charitable Contributions Expense</th>
+<th data-quarto-table-cell-role="th">Effective Income Tax Rate Reconciliation Nondeductible Expense Charitable Contributions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>9</td>
+<td>5</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>-1,888,889</td>
+<td>460,800</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>11,384,688</td>
+<td>293,048</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>-14,000,000</td>
+<td>118,000</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>-5,000,000</td>
+<td>173,000</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>-3,000,000</td>
+<td>587,000</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>0</td>
+<td>709,000</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>25,000,000</td>
+<td>717,000</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

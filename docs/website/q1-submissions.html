@@ -1165,7 +1165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">nan</td>
 <td style="text-align: left;">nan</td>
 <td style="text-align: left;">2024-02-14</td>
-<td style="text-align: left;">2024-05-27</td>
+<td style="text-align: left;">2024-06-03</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">ball-20240214x8k_htm.xml</td>
@@ -1203,7 +1203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">nan</td>
 <td style="text-align: left;">nan</td>
 <td style="text-align: left;">2024-02-14</td>
-<td style="text-align: left;">2024-05-27</td>
+<td style="text-align: left;">2024-06-03</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">bio-20240209_htm.xml</td>
@@ -1241,7 +1241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">nan</td>
 <td style="text-align: left;">nan</td>
 <td style="text-align: left;">2024-02-14</td>
-<td style="text-align: left;">2024-05-27</td>
+<td style="text-align: left;">2024-06-03</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">dbd-20240214_htm.xml</td>
@@ -1258,6 +1258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Objective: Determine if the Submission Data Set can (1) be used to conduct a comprehensive analysis of existing philanthropic giving in environmental and social justice and (2) be used to assess the level of transparency and accountability in current giving practices.</p>
 <section id="identification-of-corporate-donors" class="level3">
 <h3 class="anchored" data-anchor-id="identification-of-corporate-donors">4.1. Identification of Corporate Donors</h3>
+<hr>
 <p>The Submission Data Set enables filtering based on Standard Industrial Classification codes, which indicate organizations’ areas of focus and filing department. This step enables the identification of businesses focused on environmental protection and social justice and is crucial for creating a focused dataset of relevant businesses for our objective above.</p>
 <p>The Submission Data Set also includes the former names of reporting businesses, enabling access to historical data concerning them. This information is essential for ensuring the maintenance of accurate and consistent records.</p>
 <p><strong>Sample of Name Data:</strong></p>
@@ -1317,7 +1318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <section id="using-standard-industrial-classification-codes" class="level4">
-<h4 class="anchored" data-anchor-id="using-standard-industrial-classification-codes">4.1.1. Using Standard Industrial Classification Codes</h4>
+<h4 class="anchored" data-anchor-id="using-standard-industrial-classification-codes"><strong>4.1.1. Using Standard Industrial Classification Codes</strong></h4>
 <p>Standard Industrial Classification (SIC) codes are three or four-digit numerical codes that categorize the industries that companies belong to based on their business activities. The first two digits represent the highest level business classification, while the subsequent two digits are used to further refine the identification.</p>
 <p>SIC codes also determine review assignments in the Division of Corporation Finance. For example, a Metal Mining (SIC 1000) business would have its filings reviewed by staffers in the Office of Energy &amp; Transportation.</p>
 <p><strong>Sample of Possible SIC Codes:</strong></p>
@@ -1396,7 +1397,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="using-filer-status" class="level4">
-<h4 class="anchored" data-anchor-id="using-filer-status">4.1.2. Using Filer Status</h4>
+<h4 class="anchored" data-anchor-id="using-filer-status"><strong>4.1.2. Using Filer Status</strong></h4>
 <p>Under the Securities Exchange Act of 1934, the SEC classifies publicly traded companies by filing status on the basis of their public float, which is a measure of their market capitalization. The Submission Data Set identifies three filing statuses: Large Accelerated Filer (1-LAF), Accelerated Filer (2-ACC), and Non-Accelerated Filer (4-NON).</p>
 <ul>
 <li><p><strong>Large Accelerated Filer (1-LAF)</strong>: Companies with a market value exceeding $700 million by the end of their second fiscal quarter.</p></li>
@@ -1471,6 +1472,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="geographic-distribution" class="level3">
 <h3 class="anchored" data-anchor-id="geographic-distribution">4.2. Geographic Distribution</h3>
+<hr>
 <p>The Submission Data Set includes fields for both business (where an organization’s headquarters are) and mailing address (where an organization prefers to receive letters, notices, and legal documents).</p>
 <p>Business addresses offer valuable insights into the geographic distribution of philanthropic efforts toward specific causes. This can aid in assessing regional focuses and gaps in support.</p>
 <p>Mailing addresses can be used to contact reporting businesses regarding missing or redundant data.</p>
@@ -1599,6 +1601,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="transparency-and-accountability" class="level3">
 <h3 class="anchored" data-anchor-id="transparency-and-accountability">4.3. Transparency and Accountability</h3>
+<hr>
 <p>The Submission Data Set enables filtering based on WKSI status and submission detail, which reflect businesses’ timeliness and accuracy in financial reporting. This step allows for the identification of businesses that maintain high standards of corporate governance and provide reliable information to market stakeholders.</p>
 <p>The Submission Data Set denotes an organization’s submission detail with a boolean value (1 for true, 0 for false). TRUE indicates that the XBRL submission contains quantitative disclosures within the footnotes and schedules at the required detail level (e.g., each amount).</p>
 <p>The relationship between filer status, WKSI status, and submission detail implies a connection between financial status and accountability. Large Accelerated Filers with WKSI status outnumber both normal Accelerated Filers and Non-Accelerated Filers by nearly 40 times. Yet, when it comes to the number of submissions with required detail, Regular Accelerated Filers lag behind both Large-Accelerated Filers and Non-Accelerated Filers.</p>
@@ -1656,7 +1659,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <section id="using-wksi-status" class="level4">
-<h4 class="anchored" data-anchor-id="using-wksi-status">4.3.1. Using WKSI Status</h4>
+<h4 class="anchored" data-anchor-id="using-wksi-status"><strong>4.3.1. Using WKSI Status</strong></h4>
 <p>The Submission Data Set denotes an organization’s WKSI status with a boolean value (1 for true, 0 for false). To be a WKSI, an organization must meet the three criteria outlined in SEC Rule 405:</p>
 <ol type="1">
 <li><p>The issuer must meet the requirements of Form S-3. This requires that the issuer has (a) timely filed periodic reports for 12 calendar months and (b) not defaulted on any indebtedness or long-term leases.</p></li>

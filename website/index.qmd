@@ -21,3 +21,7 @@ This project aims to:
 -   Financial Statement Data Scoping
 
     -   Multiple pages documenting important fields in corporate financial reports and potential significance for dashboard.
+
+-   Financial Statement Data Analysis
+
+    -   Multiple pages performing deeper data analysis from relevant fields indentified in Financial Statement Data Scoping.

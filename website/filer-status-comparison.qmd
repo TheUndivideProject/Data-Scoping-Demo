@@ -1,0 +1,42 @@
+---
+title: "Filer Status Comparison"
+output:
+  quarto::html_document:
+    toc: true
+
+format:
+  html:
+    code-fold: true
+---
+
+## 1. Introduction
+
+This document focuses on the distinctions between the three filing statuses outlined in the 2024 Q1 Submission Data Report – Large Accelerated Filers, Regular Accelerated Filers, and Non-Accelerated Filers – to provide a comprehensive view of how different market segments allocate their resources.
+
+## 2. Research Questions
+
+### 2.1. Selection Criteria
+
+------------------------------------------------------------------------
+
+Objective: Establish clear criteria for selecting companies within each filing status to ensure a balanced comparison.
+
+### 2.2. Sample Size
+
+------------------------------------------------------------------------
+
+Objective: Define the optimal number of companies per classification for comparison.
+
+Considering the data size, a sample size of three companies per classification is a good starting point. We can adjust this size if we encounter significant variations within a classification.
+
+### 2.3. Data Points
+
+------------------------------------------------------------------------
+
+Objective: Select data points for comparison. This could include R&D expenditures, marketing expenses, compliance costs, and other relevant financial metrics.
+
+### 2.4. Analysis Framework
+
+------------------------------------------------------------------------
+
+Objective: Develop a framework for analyzing and comparing the resource allocation patterns.

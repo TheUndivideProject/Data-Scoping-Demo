@@ -14,6 +14,10 @@ website:
             href: website/q1-submissions.qmd
           - text: 2024 Q1 Numeric Data Report
             href: website/q1-numbers.qmd
+      - text: Financial Statement Data Analysis
+        menu:
+          - text: Filer Status Comparison
+            href: website/filer-status-comparison.qmd
 
 format:
   html:

@@ -145,9 +145,8 @@ Each submission's 'FINANCIAL ELEMENT' column specifies either a standard or cust
 
 -   **Accounting Fees:** provides insights into the organization's financial oversight and auditing practices. High fees can be associated with rigorous procedures.
 
-```{=html}
 <!-- -->
-```
+
 -   **Deferred Compensation Liability, Deferred Compensation Equity, Deferred Compensation Plan Assets:** provide insights into the organization's budget allocation for leadership compensation.
 
 -   **Interest Expense:** provides insights into the organization's debt levels, which can inform assessments of financial health.

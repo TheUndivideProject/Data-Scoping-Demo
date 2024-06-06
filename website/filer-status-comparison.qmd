@@ -21,6 +21,92 @@ This document focuses on the distinctions between the three filing statuses outl
 
 Objective: Establish clear criteria for selecting companies within each filing status to ensure a balanced comparison.
 
+1.  **Geographic Location**
+    -   U.S. Based
+
+    -   Presence of Environmental Justice Communities: Identified through Humanitarian OpenStreetMap Team (HOTOSM) field data. You can access the data on HOTOSM's GitHub: <https://github.com/hotosm/osm-fieldwork>
+
+    -   Engagement with Digital Divide and Climate Change: Cities with a high presence of individuals and local agencies addressing the intersection of climate change and the digital divide, as indicated by responses to an international survey of emergency managers, disasterologists, planners, resilience professionals, academics, and NGOs.
+
+        ```{python}
+        # libraries for data manipulation.
+        import pandas as pd
+        import numpy as np
+
+        # libraries for data visualisation
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+        import plotly.express as px
+        import plotly.io as pio
+
+        # libraries for quarto rendering
+        from IPython.display import Markdown,display
+        from tabulate import tabulate
+        import plotly.io as pio
+
+        # remove warnings
+        import warnings
+        warnings.filterwarnings("ignore", category=UserWarning)
+
+        # read in data from 'emergency-manager-survey.csv' in the 'data' folder
+        emergency_manager_survey = pd.read_csv('../data/emergency-manager-survey.csv')
+
+        # print Q1-Q7
+        display(Markdown("Questions:\n\n" +
+                         emergency_manager_survey[['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7']].head(1).to_markdown(index=False)))
+
+        # print data dimensions
+        shape_caption = "Data Dimensions:"
+        shape_df = pd.DataFrame({
+                'Dimension': ['Rows', 'Columns'],
+                'Count': [emergency_manager_survey.shape[0], emergency_manager_survey.shape[1]]
+            })
+        shape_df['Count'] = shape_df['Count'].apply(lambda x: f"{x:,}")
+        shape_markdown = shape_caption + "\n\n" + shape_df.to_markdown(index=False)
+        display(Markdown(shape_markdown))
+        ```
+
+    -   Based on the combined criteria of environmental justice presence and engagement in addressing the digital divide and climate change, the following cities have been identified, listed in alphabetical order:
+
+    -   ::: panel-tabset
+        ## Target Cities
+
+        -   Alexandria, VA
+
+        ```{=html}
+        <!-- -->
+        ```
+        -   Chicago, IL
+
+        -   Fort Lauderdale, FL
+
+        -   Laurel, MD
+
+        -   Lewiston, ID
+
+        -   Nashua, NH
+
+        -   New Orleans, LA
+
+        -   Portland, OR
+
+        -   Raleigh, NC
+
+        -   Rochester, NY
+
+        -   Savannah, GA
+
+        -   Seattle, WA
+
+        -   Washington, DC
+
+        -   Wichita, KS
+
+        ## Target Cities Mapped
+
+        ![](/data/target-cities.png)
+        :::
+
 ### 2.2. Sample Size
 
 ------------------------------------------------------------------------

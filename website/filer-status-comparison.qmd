@@ -202,7 +202,7 @@ Objective: Select data points for comparison. This could include R&D expenditure
         # add statistics for each identifier to combined DataFrame
         for id in expense_ids:
             filtered_expense_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
-            stats = filtered_expense_ids['VALUE'].round().astype('Int64').describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+            stats = round(filtered_expense_ids['VALUE']).describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
             expense_stats = pd.concat([expense_stats, stats], axis=1)
 
         # show statistics

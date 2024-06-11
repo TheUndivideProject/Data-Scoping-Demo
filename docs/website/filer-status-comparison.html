@@ -483,7 +483,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>ranges_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -560,7 +560,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> expense_ids:</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    filtered_expense_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_expense_ids[<span class="st">'VALUE'</span>].<span class="bu">round</span>().astype(<span class="st">'Int64'</span>).describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> <span class="bu">round</span>(filtered_expense_ids[<span class="st">'VALUE'</span>]).describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    expense_stats <span class="op">=</span> pd.concat([expense_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
@@ -580,35 +580,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">count</td>
-<td>2502.0</td>
+<td>2.502000e+03</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">mean</td>
-<td>347723725.622302</td>
+<td>3.477237e+08</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">std</td>
-<td>2118317547.655797</td>
+<td>2.118318e+09</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">min</td>
-<td>-124000.0</td>
+<td>-1.240000e+05</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">25%</td>
-<td>1441128.0</td>
+<td>1.441128e+06</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">50%</td>
-<td>9896000.0</td>
+<td>9.896000e+06</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">75%</td>
-<td>84924750.0</td>
+<td>8.492475e+07</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">max</td>
-<td>45427000000.0</td>
+<td>4.542700e+10</td>
 </tr>
 </tbody>
 </table>

@@ -136,9 +136,7 @@ Objective: Establish clear criteria for selecting companies within each filing s
     -   To ensure a balanced comparison, our assessment should target filers in the bottom 25%, middle 50%, and top 25% of each classification.
 
         ```{python}
-        import pandas as pd
 
-        sub_data = pd.read_csv('../data/sub.csv')
         num_data = pd.read_csv('../data/num.csv')
 
         merged_df = pd.merge(sub_data, num_data, on='ACCESSION NUMBER')

@@ -108,7 +108,7 @@ for col in date_cols:
     num_data[col] = num_data[col].astype(str).str.replace('\.0$', '', regex=True)
     num_data[col] = pd.to_datetime(num_data[col], format='%Y%m%d', errors='coerce').dt.date
 
-num_data['VALUE'] = num_data['VALUE'].round().astype('Int64')
+num_data['VALUE'] = round(num_data['VALUE'])
 
 # replace missing values with nan
 num_data = num_data.fillna(np.nan)
@@ -144,13 +144,8 @@ Each submission's 'FINANCIAL ELEMENT' column specifies either a standard or cust
 #### **4.2.1. Expenses**
 
 -   **Accounting Fees:** provides insights into the organization's financial oversight and auditing practices. High fees can be associated with rigorous procedures.
-
-<!-- -->
-
 -   **Deferred Compensation Liability, Deferred Compensation Equity, Deferred Compensation Plan Assets:** provide insights into the organization's budget allocation for leadership compensation.
-
 -   **Interest Expense:** provides insights into the organization's debt levels, which can inform assessments of financial health.
-
 -   **Legal Fees:** provides insights into the organization's legal compliance and potential litigation challenges. High fees can be associated with either.
 
 **Operational Expenses Stats:**

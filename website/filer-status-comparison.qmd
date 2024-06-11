@@ -22,6 +22,7 @@ This document focuses on the distinctions between the three filing statuses outl
 Objective: Establish clear criteria for selecting companies within each filing status to ensure a balanced comparison.
 
 1.  **Geographic Location**
+
     -   U.S. Based
 
     -   Presence of Environmental Justice Communities: Identified through Humanitarian OpenStreetMap Team (HOTOSM) field data. You can access the data on HOTOSM's GitHub: <https://github.com/hotosm/osm-fieldwork>
@@ -72,40 +73,99 @@ Objective: Establish clear criteria for selecting companies within each filing s
         ## Target Cities
 
         -   Alexandria, VA
-
-        ```{=html}
-        <!-- -->
-        ```
         -   Chicago, IL
-
         -   Fort Lauderdale, FL
-
         -   Laurel, MD
-
         -   Lewiston, ID
-
         -   Nashua, NH
-
         -   New Orleans, LA
-
         -   Portland, OR
-
         -   Raleigh, NC
-
         -   Rochester, NY
-
         -   Savannah, GA
-
         -   Seattle, WA
-
         -   Washington, DC
-
         -   Wichita, KS
 
         ## Target Cities Mapped
 
         ![](/data/target-cities.png)
         :::
+
+2.  **Industry**
+
+    -   Some industries will be more inclined to donate to environmental causes than others.
+
+    -   To reduce bias within each filer status, we can compare businesses within the same industries across different filer statuses.
+
+    -   The following ten industries appear most often in the Submissions Data Set and should thus be prioritized in our research to ensure a representative sample.
+
+    ```{python}
+
+    # read in data from 'sub_data.csv' in the 'data' folder
+    sub_data = pd.read_csv('../data/sub.csv')
+
+    industries = [
+        "Pharmaceutical Preparations",
+        "Real Estate Investment Trusts",
+        "Prepackaged Software",
+        "State Commercial Banks",
+        "Biological Products, Except Diagnostic Substances",
+        "Fire, Marine, and Casualty Insurance",
+        "Metal Cans",
+        "Laboratory Analytical Instruments",
+        "Calculating and Accounting Machines, Except Electronic Computers",
+        "Miscellaneous Electrical Machinery, Equipment, and Supplies"
+    ]
+
+    # count the number of filers for each unique classification code
+    classifications = sub_data['CLASSIFICATION'].value_counts().reset_index()
+    classifications.columns = ['CLASSIFICATION', 'NUMBER OF FILERS']
+    classifications['INDUSTRY'] = pd.Series(industries)
+
+
+    # show the resulting dataframe
+    display(classifications.head(10))
+
+    ```
+
+3.  **Financial Performance**
+
+    -   The Submissions Data Set identifies public float as a criterion for filer status, but that value varies quite a bit within each classification.
+
+    -   To ensure a balanced comparison, our assessment should target filers in the bottom 25%, middle 50%, and top 25% of each classification.
+
+        ```{python}
+        import pandas as pd
+
+        sub_data = pd.read_csv('../data/sub.csv')
+        num_data = pd.read_csv('../data/num.csv')
+
+        merged_df = pd.merge(sub_data, num_data, on='ACCESSION NUMBER')
+
+        grouped = merged_df.groupby('FILER STATUS')
+
+        ranges = []
+
+        for name, group in grouped:
+            public_floats = group[group['FINANCIAL ELEMENT'] == 'EntityPublicFloat']['VALUE']
+            
+            bottom_25 = public_floats.quantile(0.25)
+            middle_50 = public_floats.quantile(0.75) - public_floats.quantile(0.25)
+            top_25 = public_floats.quantile(0.75)
+            
+            ranges.append({
+                'FILER STATUS': name,
+                'Bottom 25%': round(bottom_25),
+                'Middle 50%': round(middle_50),
+                'Top 25%': round(top_25)
+            })
+
+        ranges_df = pd.DataFrame(ranges)
+
+        ranges_df
+
+        ```
 
 ### 2.2. Sample Size
 
@@ -120,6 +180,36 @@ Considering the data size, a sample size of three companies per classification 
 ------------------------------------------------------------------------
 
 Objective: Select data points for comparison. This could include R&D expenditures, marketing expenses, compliance costs, and other relevant financial metrics.
+
+-   The following data points (outlined in the Q1 Numeric Data Report) facilitate the assessment of an organization's expenses.
+
+    -   **Accounting Fees:** provides insights into the organization's financial oversight and auditing practices. High fees can be associated with rigorous procedures.
+
+    -   **Compensation:** provide insights into the organization's budget allocation for leadership compensation.
+
+    -   **Interest:** provides insights into the organization's debt levels, which can inform assessments of financial health.
+
+    -   **Legal Fees:** provides insights into the organization's legal compliance and potential litigation challenges. High fees can be associated with either.
+
+-   In addition, an organization's spending on **Research & Development** can provide insights into its current priorities.
+
+    -   **Research & Development Stats:**
+
+        ```{python}
+        import re
+
+        expense_ids = ['ResearchAndDevelopmentExpense']
+        expense_stats = pd.DataFrame()
+
+        # add statistics for each identifier to combined DataFrame
+        for id in expense_ids:
+            filtered_expense_ids = num_data[num_data['FINANCIAL ELEMENT'] == id]
+            stats = filtered_expense_ids['VALUE'].round().astype('Int64').describe().rename(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', id))
+            expense_stats = pd.concat([expense_stats, stats], axis=1)
+
+        # show statistics
+        display(expense_stats)
+        ```
 
 ### 2.4. Analysis Framework
 

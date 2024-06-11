@@ -93,6 +93,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -203,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 <p>Objective: Establish clear criteria for selecting companies within each filing status to ensure a balanced comparison.</p>
 <ol type="1">
-<li><strong>Geographic Location</strong>
+<li><p><strong>Geographic Location</strong></p>
 <ul>
 <li><p>U.S. Based</p></li>
 <li><p>Presence of Environmental Justice Communities: Identified through Humanitarian OpenStreetMap Team (HOTOSM) field data. You can access the data on HOTOSM’s GitHub: <a href="https://github.com/hotosm/osm-fieldwork" class="uri">https://github.com/hotosm/osm-fieldwork</a></p></li>
@@ -312,26 +315,216 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <ul>
 <li>Alexandria, VA</li>
-</ul>
-<!-- -->
-<ul>
-<li><p>Chicago, IL</p></li>
-<li><p>Fort Lauderdale, FL</p></li>
-<li><p>Laurel, MD</p></li>
-<li><p>Lewiston, ID</p></li>
-<li><p>Nashua, NH</p></li>
-<li><p>New Orleans, LA</p></li>
-<li><p>Portland, OR</p></li>
-<li><p>Raleigh, NC</p></li>
-<li><p>Rochester, NY</p></li>
-<li><p>Savannah, GA</p></li>
-<li><p>Seattle, WA</p></li>
-<li><p>Washington, DC</p></li>
-<li><p>Wichita, KS</p></li>
+<li>Chicago, IL</li>
+<li>Fort Lauderdale, FL</li>
+<li>Laurel, MD</li>
+<li>Lewiston, ID</li>
+<li>Nashua, NH</li>
+<li>New Orleans, LA</li>
+<li>Portland, OR</li>
+<li>Raleigh, NC</li>
+<li>Rochester, NY</li>
+<li>Savannah, GA</li>
+<li>Seattle, WA</li>
+<li>Washington, DC</li>
+<li>Wichita, KS</li>
 </ul>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p><img src="../data/target-cities.png" class="img-fluid"></p>
+</div>
+</div>
+</div></li>
+</ul></li>
+<li><p><strong>Industry</strong></p>
+<ul>
+<li><p>Some industries will be more inclined to donate to environmental causes than others.</p></li>
+<li><p>To reduce bias within each filer status, we can compare businesses within the same industries across different filer statuses.</p></li>
+<li><p>The following ten industries appear most often in the Submissions Data Set and should thus be prioritized in our research to ensure a representative sample.</p></li>
+</ul>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in data from 'sub_data.csv' in the 'data' folder</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sub_data <span class="op">=</span> pd.read_csv(<span class="st">'../data/sub.csv'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>industries <span class="op">=</span> [</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pharmaceutical Preparations"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Real Estate Investment Trusts"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Prepackaged Software"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"State Commercial Banks"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Biological Products, Except Diagnostic Substances"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Fire, Marine, and Casualty Insurance"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Metal Cans"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Laboratory Analytical Instruments"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Calculating and Accounting Machines, Except Electronic Computers"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Miscellaneous Electrical Machinery, Equipment, and Supplies"</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># count the number of filers for each unique classification code</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>classifications <span class="op">=</span> sub_data[<span class="st">'CLASSIFICATION'</span>].value_counts().reset_index()</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>classifications.columns <span class="op">=</span> [<span class="st">'CLASSIFICATION'</span>, <span class="st">'NUMBER OF FILERS'</span>]</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>classifications[<span class="st">'INDUSTRY'</span>] <span class="op">=</span> pd.Series(industries)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># show the resulting dataframe</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>display(classifications.head(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">CLASSIFICATION</th>
+<th data-quarto-table-cell-role="th">NUMBER OF FILERS</th>
+<th data-quarto-table-cell-role="th">INDUSTRY</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2834.0</td>
+<td>2574</td>
+<td>Pharmaceutical Preparations</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>6798.0</td>
+<td>1043</td>
+<td>Real Estate Investment Trusts</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>7372.0</td>
+<td>860</td>
+<td>Prepackaged Software</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>6022.0</td>
+<td>836</td>
+<td>State Commercial Banks</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2836.0</td>
+<td>801</td>
+<td>Biological Products, Except Diagnostic Substances</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>6770.0</td>
+<td>722</td>
+<td>Fire, Marine, and Casualty Insurance</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>3841.0</td>
+<td>688</td>
+<td>Metal Cans</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>1311.0</td>
+<td>466</td>
+<td>Laboratory Analytical Instruments</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>6021.0</td>
+<td>459</td>
+<td>Calculating and Accounting Machines, Except El...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>7389.0</td>
+<td>398</td>
+<td>Miscellaneous Electrical Machinery, Equipment,...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div></li>
+<li><p><strong>Financial Performance</strong></p>
+<ul>
+<li><p>The Submissions Data Set identifies public float as a criterion for filer status, but that value varies quite a bit within each classification.</p></li>
+<li><p>To ensure a balanced comparison, our assessment should target filers in the bottom 25%, middle 50%, and top 25% of each classification.</p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sub_data <span class="op">=</span> pd.read_csv(<span class="st">'../data/sub.csv'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>num_data <span class="op">=</span> pd.read_csv(<span class="st">'../data/num.csv'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> pd.merge(sub_data, num_data, on<span class="op">=</span><span class="st">'ACCESSION NUMBER'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> merged_df.groupby(<span class="st">'FILER STATUS'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ranges <span class="op">=</span> []</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, group <span class="kw">in</span> grouped:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    public_floats <span class="op">=</span> group[group[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="st">'EntityPublicFloat'</span>][<span class="st">'VALUE'</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    bottom_25 <span class="op">=</span> public_floats.quantile(<span class="fl">0.25</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    middle_50 <span class="op">=</span> public_floats.quantile(<span class="fl">0.75</span>) <span class="op">-</span> public_floats.quantile(<span class="fl">0.25</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    top_25 <span class="op">=</span> public_floats.quantile(<span class="fl">0.75</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    ranges.append({</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">'FILER STATUS'</span>: name,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Bottom 25%'</span>: <span class="bu">round</span>(bottom_25),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Middle 50%'</span>: <span class="bu">round</span>(middle_50),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Top 25%'</span>: <span class="bu">round</span>(top_25)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>ranges_df <span class="op">=</span> pd.DataFrame(ranges)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>ranges_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">FILER STATUS</th>
+<th data-quarto-table-cell-role="th">Bottom 25%</th>
+<th data-quarto-table-cell-role="th">Middle 50%</th>
+<th data-quarto-table-cell-role="th">Top 25%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1-LAF</td>
+<td>2200000000</td>
+<td>21535904439</td>
+<td>23735904439</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2-ACC</td>
+<td>153600000</td>
+<td>243000000</td>
+<td>396600000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>4-NON</td>
+<td>3001531</td>
+<td>92094542</td>
+<td>95096073</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
 </div></li>
@@ -348,6 +541,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="data-points">2.3. Data Points</h3>
 <hr>
 <p>Objective: Select data points for comparison. This could include R&amp;D expenditures, marketing expenses, compliance costs, and other relevant financial metrics.</p>
+<ul>
+<li><p>The following data points (outlined in the Q1 Numeric Data Report) facilitate the assessment of an organization’s expenses.</p>
+<ul>
+<li><p><strong>Accounting Fees:</strong>&nbsp;provides insights into the organization’s financial oversight and auditing practices. High fees can be associated with rigorous procedures.</p></li>
+<li><p><strong>Compensation:</strong>&nbsp;provide insights into the organization’s budget allocation for leadership compensation.</p></li>
+<li><p><strong>Interest:</strong>&nbsp;provides insights into the organization’s debt levels, which can inform assessments of financial health.</p></li>
+<li><p><strong>Legal Fees:</strong>&nbsp;provides insights into the organization’s legal compliance and potential litigation challenges. High fees can be associated with either.</p></li>
+</ul></li>
+<li><p>In addition, an organization’s spending on <strong>Research &amp; Development</strong> can provide insights into its current priorities.</p>
+<ul>
+<li><p><strong>Research &amp; Development Stats:</strong></p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>expense_ids <span class="op">=</span> [<span class="st">'ResearchAndDevelopmentExpense'</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>expense_stats <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add statistics for each identifier to combined DataFrame</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span> <span class="kw">in</span> expense_ids:</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    filtered_expense_ids <span class="op">=</span> num_data[num_data[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="bu">id</span>]</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    stats <span class="op">=</span> filtered_expense_ids[<span class="st">'VALUE'</span>].<span class="bu">round</span>().astype(<span class="st">'Int64'</span>).describe().rename(re.sub(<span class="vs">r'(?&lt;=[a-z])(?=[A-Z])'</span>, <span class="st">' '</span>, <span class="bu">id</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    expense_stats <span class="op">=</span> pd.concat([expense_stats, stats], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show statistics</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>display(expense_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Research And Development Expense</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>2502.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>347723725.622302</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>2118317547.655797</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>-124000.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>1441128.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>9896000.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>84924750.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>45427000000.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div></li>
+</ul></li>
+</ul>
 </section>
 <section id="analysis-framework" class="level3">
 <h3 class="anchored" data-anchor-id="analysis-framework">2.4. Analysis Framework</h3>

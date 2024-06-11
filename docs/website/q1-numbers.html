@@ -560,7 +560,7 @@ Note
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    num_data[col] <span class="op">=</span> num_data[col].astype(<span class="bu">str</span>).<span class="bu">str</span>.replace(<span class="st">'\.0$'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    num_data[col] <span class="op">=</span> pd.to_datetime(num_data[col], <span class="bu">format</span><span class="op">=</span><span class="st">'%Y%m</span><span class="sc">%d</span><span class="st">'</span>, errors<span class="op">=</span><span class="st">'coerce'</span>).dt.date</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>num_data[<span class="st">'VALUE'</span>] <span class="op">=</span> num_data[<span class="st">'VALUE'</span>].<span class="bu">round</span>().astype(<span class="st">'Int64'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>num_data[<span class="st">'VALUE'</span>] <span class="op">=</span> <span class="bu">round</span>(num_data[<span class="st">'VALUE'</span>])</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># replace missing values with nan</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>num_data <span class="op">=</span> num_data.fillna(np.nan)</span>
@@ -573,13 +573,13 @@ Note
 <table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 9%">
-<col style="width: 42%">
-<col style="width: 6%">
+<col style="width: 41%">
+<col style="width: 5%">
 <col style="width: 7%">
 <col style="width: 5%">
 <col style="width: 10%">
 <col style="width: 8%">
-<col style="width: 4%">
+<col style="width: 6%">
 <col style="width: 5%">
 </colgroup>
 <thead>
@@ -604,7 +604,7 @@ Note
 <td style="text-align: left;">2023-12-31</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">USD</td>
-<td style="text-align: right;">1041000</td>
+<td style="text-align: right;">1.041e+06</td>
 <td style="text-align: right;">nan</td>
 </tr>
 <tr class="even">
@@ -615,7 +615,7 @@ Note
 <td style="text-align: left;">2023-06-30</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">USD</td>
-<td style="text-align: right;">1372000</td>
+<td style="text-align: right;">1.372e+06</td>
 <td style="text-align: right;">nan</td>
 </tr>
 <tr class="odd">
@@ -626,7 +626,7 @@ Note
 <td style="text-align: left;">2023-12-31</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">USD</td>
-<td style="text-align: right;">19634000</td>
+<td style="text-align: right;">1.9634e+07</td>
 <td style="text-align: right;">nan</td>
 </tr>
 <tr class="even">
@@ -637,7 +637,7 @@ Note
 <td style="text-align: left;">2023-06-30</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">USD</td>
-<td style="text-align: right;">18788000</td>
+<td style="text-align: right;">1.8788e+07</td>
 <td style="text-align: right;">nan</td>
 </tr>
 <tr class="odd">
@@ -716,12 +716,9 @@ Note
 <h4 class="anchored" data-anchor-id="expenses"><strong>4.2.1. Expenses</strong></h4>
 <ul>
 <li><strong>Accounting Fees:</strong>&nbsp;provides insights into the organization’s financial oversight and auditing practices. High fees can be associated with rigorous procedures.</li>
-</ul>
-<!-- -->
-<ul>
-<li><p><strong>Deferred Compensation Liability, Deferred Compensation Equity, Deferred Compensation Plan Assets:</strong>&nbsp;provide insights into the organization’s budget allocation for leadership compensation.</p></li>
-<li><p><strong>Interest Expense:</strong>&nbsp;provides insights into the organization’s debt levels, which can inform assessments of financial health.</p></li>
-<li><p><strong>Legal Fees:</strong>&nbsp;provides insights into the organization’s legal compliance and potential litigation challenges. High fees can be associated with either.</p></li>
+<li><strong>Deferred Compensation Liability, Deferred Compensation Equity, Deferred Compensation Plan Assets:</strong>&nbsp;provide insights into the organization’s budget allocation for leadership compensation.</li>
+<li><strong>Interest Expense:</strong>&nbsp;provides insights into the organization’s debt levels, which can inform assessments of financial health.</li>
+<li><strong>Legal Fees:</strong>&nbsp;provides insights into the organization’s legal compliance and potential litigation challenges. High fees can be associated with either.</li>
 </ul>
 <p><strong>Operational Expenses Stats:</strong></p>
 <div class="cell" data-execution_count="5">

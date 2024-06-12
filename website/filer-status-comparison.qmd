@@ -149,13 +149,11 @@ Objective: Establish clear criteria for selecting companies within each filing s
             public_floats = group[group['FINANCIAL ELEMENT'] == 'EntityPublicFloat']['VALUE']
             
             bottom_25 = public_floats.quantile(0.25)
-            middle_50 = public_floats.quantile(0.75) - public_floats.quantile(0.25)
             top_25 = public_floats.quantile(0.75)
             
             ranges.append({
                 'FILER STATUS': name,
                 'Bottom 25%': round(bottom_25),
-                'Middle 50%': round(middle_50),
                 'Top 25%': round(top_25)
             })
 
@@ -214,3 +212,144 @@ Objective: Select data points for comparison. This could include R&D expenditure
 ------------------------------------------------------------------------
 
 Objective: Develop a framework for analyzing and comparing the resource allocation patterns.
+
+1.  **Create Sample**
+
+    -   **Criteria:** Reference [2.1. Selection Criteria].
+
+    -   **Sample Size:** Three companies per classification (Large Accelerated Filers, Accelerated Filers, Non-Accelerated Filers).
+
+2.  **Create Financial Profiles**
+
+    -   **Use:** 2024 Q1 SEC Submissions and Numbers. Run the following code to create a merged dataset:
+
+        ```{python}
+        """
+        import pandas as pd
+
+        # load the datasets
+        num_data = pd.read_csv('../data/num.csv')
+        sub_data = pd.read_csv('../data/sub.csv')
+
+        # merge the datasets on 'ACCESSION NUMBER'
+        merged_df = pd.merge(num_data, sub_data, on='ACCESSION NUMBER')
+
+        # save the merged dataset to a CSV file
+        merged_df.to_csv('merged_dataset.csv', index=False)
+
+        """
+        ```
+
+    -   **Data Points:** Extract the following data points for each filer. Label missing data points 'nan.'
+
+        ```{python}
+        data_points = {
+            'DATA POINT': [
+                'Accounting Fees', 
+                'Compensation', 
+                '', 
+                '',
+                'Interest', 
+                'Legal Fees', 
+                'R&D Expenses'
+            ],
+            'KEYWORD WITHIN SEC DATA SET': [
+                'AccountingFees', 
+                'DeferredCompensationLiabilityCurrent', 
+                'DeferredCompensationEquity', 
+                'DeferredCompensationPlanAssets', 
+                'InterestExpense', 
+                'LegalFees', 
+                'ResearchAndDevelopmentExpense'
+            ]
+        }
+
+        data_points_df = pd.DataFrame(data_points)
+
+        display(data_points_df)
+        ```
+
+3.  **Assess Charitable Giving**
+
+    -   **Keywords:** “charitable activities”, “charitable contributions”, “charitable donations”, “community engagement”, “community investments”, “corporate social responsibility”, “philanthropy”
+
+    -   **Method:**
+
+        -   Search each filer for the above keywords within their 2023 Form 10-K and Form DEF 14-A using the [EDGAR Full Text Search](https://www.sec.gov/edgar/search/#).
+
+        -   Extract (suggested data points):
+
+            -   Quantitative Data:
+
+                -   Amount donated to charitable causes.
+
+                -   Number of charitable initiatives supported.
+
+                -   Percentage of revenue donated to charitable causes.
+
+            -   Qualitative Data:
+
+                -   Descriptions of charitable initiatives or programs.
+
+                -   Impact of charitable activities on communities.
+
+4.  **Assess Climate Reporting**
+
+    -   **Keywords:** "carbon disclosure", “climate action', "climate disclosure", "environmental compliance", "environmental governance", "environmental initiatives", "environmental policies", "ESG", "sustainable development goals", "SDG"
+
+    -   **Method:**
+
+        -   Search each filer for the above keywords within their 2023 Form 10-K, Form DEF 14A, and Form 8-K using the [EDGAR Full Text Search](https://www.sec.gov/edgar/search/#).
+
+        -   Search each filer's 2023 Environmental Social Governance Report, if available online.
+
+        -   Extract (suggested data points):
+
+            -   Quantitative Data:
+
+                -   Amount paid in environmental fines or penalties.
+
+                -   Amount invested in environmental initiatives.
+
+            -   Qualitative Data:
+
+                -   Descriptions of climate-related risks and their potential impact on business operations.
+
+                -   Governance structure for managing ESG issues.
+
+                -   Stakeholder engagement on ESG issues.
+
+                -   Descriptions of specific environmental projects or programs.
+
+                -   Qualitative assessment of the impact of these initiatives.
+
+5.  Data Collection and Documentation
+
+    -   Use an Excel Spreadsheet to collect and document data.
+
+    -   **Sample Spreadsheet Formatting:**
+
+        ```{python}
+        filer_comparison_sample_data = {
+            'Name': [''],
+            'Filing Status': [''],
+            'Industry': [''],
+            'Accounting Fees': [''],
+            'Compensation': [''],
+            'Interest': [''],
+            'Legal Fees': [''],
+            'R&D Expenses': [''],
+            'Charitable Giving (10-K)': [''],
+            'Charitable Giving (8-K)': [''],
+            'Climate Reporting (10-K)': [''],
+            'Climate Reporting (DEF 14A)': [''],
+            'Climate Reporting (8-K)': [''],
+            'Climate Reporting (ESG Report)': ['']
+        }
+          
+        # Create the DataFrame
+        filer_comparison_sample_df = pd.DataFrame(filer_comparison_sample_data)
+          
+        # Display the DataFrame
+        display(filer_comparison_sample_df)
+        ```

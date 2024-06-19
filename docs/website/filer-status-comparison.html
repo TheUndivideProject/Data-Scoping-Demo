@@ -555,10 +555,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Some industries will be more inclined to donate to environmental causes than others.</p></li>
 <li><p>To reduce bias within each filer status, we can compare businesses within the same industries across different filer statuses.</p></li>
 <li><p>You can translate Standard Industrial Classification (SIC) Codes into industries using this <a href="https://www.sec.gov/corpfin/division-of-corporation-finance-standard-industrial-classification-sic-code-list">SIC Code List</a>.</p></li>
-<li><p># count number of filers per standard industrial classification</p>
-<p>classifications = sub_data[‘CLASSIFICATION’].value_counts().reset_index()</p>
-<p>classifications.columns = [‘CLASSIFICATION’, ‘Count’]</p>
-<p>display(classifications)</p></li>
 <li><p>Number of Filers per Standard Industrial Classification:</p>
 <div class="cell" data-execution_count="4">
 <details>

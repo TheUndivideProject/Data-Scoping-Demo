@@ -166,14 +166,6 @@ Objective: Establish clear criteria for selecting companies within each filing s
 
     -   You can translate Standard Industrial Classification (SIC) Codes into industries using this [SIC Code List](https://www.sec.gov/corpfin/division-of-corporation-finance-standard-industrial-classification-sic-code-list).
 
-    -   \# count number of filers per standard industrial classification
-
-        classifications = sub_data\['CLASSIFICATION'\].value_counts().reset_index()
-
-        classifications.columns = \['CLASSIFICATION', 'Count'\]
-
-        display(classifications)
-
     -   Number of Filers per Standard Industrial Classification:
 
         ```{python}

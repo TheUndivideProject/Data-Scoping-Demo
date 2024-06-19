@@ -15,6 +15,8 @@ This document focuses on the distinctions between the three filing statuses outl
 
 ## 2. Research Questions
 
+How does a filer's SEC status correlate with its resource allocation towards accountability and transparency in environmental and climate-focused philanthropy?
+
 ### 2.1. Selection Criteria
 
 ------------------------------------------------------------------------
@@ -99,6 +101,7 @@ Objective: Establish clear criteria for selecting companies within each filing s
         sub_data = pd.read_csv('../data/sub.csv')
         num_data = pd.read_csv('../data/num.csv')
         merged_df = pd.merge(sub_data, num_data, on='ACCESSION NUMBER')
+        total_count = len(merged_df)
 
         # count number of filers per geographic region
         regions = {
@@ -108,16 +111,24 @@ Objective: Establish clear criteria for selecting companies within each filing s
             'Other': [] # international and all others
         }
 
+
         def find_region(state):
             for region, states in regions.items():
                 if state in states:
                     return region
             return 'Other'
 
+        # add 'Region' column with the matching region for each state
         merged_df['Region'] = merged_df['BA STATE'].apply(find_region)
+
+        # calculate number of filers per region
         region_counts = merged_df['Region'].value_counts().reset_index()
         region_counts.columns = ['Region', 'Count']
 
+        # calculate percentage of total filers per region
+        region_counts['Percentage'] = (region_counts['Count'] / total_count) * 100
+
+        # show the resulting dataframe
         display(region_counts)
         ```
 
@@ -132,6 +143,10 @@ Objective: Establish clear criteria for selecting companies within each filing s
             for name, group in grouped:
                 counts = group[field].value_counts().reset_index()
                 counts.columns = [field_name, 'Count']
+                
+                total_count = counts['Count'].sum()
+                counts['Percentage'] = (counts['Count'] / total_count) * 100
+                
                 counts['FILER STATUS'] = name
                 counts_per_filer.append(counts)
             return pd.concat(counts_per_filer)
@@ -163,10 +178,13 @@ Objective: Establish clear criteria for selecting companies within each filing s
 
         ```{python}
         # count number of filers per standard industrial classification
-        classifications = sub_data['CLASSIFICATION'].value_counts().reset_index()
-        classifications.columns = ['CLASSIFICATION', 'Count']
+        classification_counts =  merged_df['CLASSIFICATION'].value_counts().reset_index()
+        classification_counts.columns = ['CLASSIFICATION', 'Count']
 
-        display(classifications)
+        # calculate percentage of total filers per region
+        classification_counts['Percentage'] = (classification_counts['Count'] / total_count) * 100
+
+        display(classification_counts)
         ```
 
     -   Number of Filers per Standard Industrial Classification per Filer Status:
@@ -176,37 +194,35 @@ Objective: Establish clear criteria for selecting companies within each filing s
 
         # count number of filers per standard industrial classification per filer status
         classification_counts_per_filer = add_counts_per_filer(grouped, 'CLASSIFICATION', 'CLASSIFICATION')
+
         display(classification_counts_per_filer)
         ```
 
-    -   The following ten industries appear most often in the Submissions Data Set and should thus be prioritized in our research to ensure a representative sample.
+    -   The following ten industries appear most often in the Submissions Data Set and should thus be prioritized in our research to ensure a representative sample:
 
-        ```{python}
-        industries = [
-            "Pharmaceutical Preparations",
-            "Real Estate Investment Trusts",
-            "Prepackaged Software",
-            "State Commercial Banks",
-            "Biological Products, Except Diagnostic Substances",
-            "Fire, Marine, and Casualty Insurance",
-            "Metal Cans",
-            "Laboratory Analytical Instruments",
-            "Calculating and Accounting Machines, Except Electronic Computers",
-            "Miscellaneous Electrical Machinery, Equipment, and Supplies"
-        ]
+        -   Pharmaceutical Preparations
 
-        classifications['INDUSTRY'] = pd.Series(industries)
+        -   Real Estate Investment Trusts
 
+        -   Prepackaged Software
 
-        # show the resulting dataframe
-        display(classifications.head(10))
-        ```
+        -   State Commercial Banks
+
+        -   Biological Products, Except Diagnostic Substances
+
+        -   Fire, Marine, and Casualty Insurance
+
+        -   Metal Cans", "Laboratory Analytical Instruments
+
+        -   Calculating and Accounting Machines, Except Electronic Computers
+
+        -   Miscellaneous Electrical Machinery, Equipment, and Supplies
 
 3.  **Financial Performance**
 
     -   The Submissions Data Set identifies public float as a criterion for filer status, but that value varies quite a bit within each classification.
 
-    -   Number of Filers per Public Float Percentile (considering entire Submissions Data Set):
+    -   Number of Filers per Public Float Percentile:
 
         ```{python}
         # calculate public float quantiles
@@ -233,11 +249,14 @@ Objective: Establish clear criteria for selecting companies within each filing s
         public_float_counts = merged_df['Public Float Percentile'].value_counts().reset_index()
         public_float_counts.columns = ['Public Float Percentile', 'Count']
 
+        # calculate percentage of total filers per region
+        public_float_counts['Percentage'] = (public_float_counts['Count'] / total_count) * 100
+
         display(public_float_counts)
 
         ```
 
-    -   Number of Filers per Public Float Percentile per Filer Status (considering entire Submissions Data Set):
+    -   Number of Filers per Public Float Percentile per Filer Status:
 
         ```{python}
         grouped = merged_df.groupby('FILER STATUS')

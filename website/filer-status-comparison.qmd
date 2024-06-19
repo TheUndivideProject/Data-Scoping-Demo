@@ -92,75 +92,164 @@ Objective: Establish clear criteria for selecting companies within each filing s
         ![](/data/target-cities.png)
         :::
 
+    -   Number of Filers per Geographic Region as defined in Exempt Organizations Business Master File Extract (EO BMF) <https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf>:
+
+        ```{python}
+
+        # read in data from 'sub_data.csv' and 'num_data.csv' in the 'data' folder
+        sub_data = pd.read_csv('../data/sub.csv')
+        num_data = pd.read_csv('../data/num.csv')
+        merged_df = pd.merge(sub_data, num_data, on='ACCESSION NUMBER')
+
+        # count number of filers per geographic region
+        regions = {
+            'Northeast': ['CT', 'ME', 'MA', 'NH', 'NJ', 'NY', 'RI', 'VT'],
+            'Mid-Atlantic and Great Lakes': ['DE', 'DC', 'IL', 'IN', 'IA', 'KY', 'MD', 'MI', 'MN', 'NE', 'NC', 'ND', 'OH', 'PA', 'SC', 'SD', 'VA', 'WV', 'WI'],
+            'Gulf Coast and Pacific Coast': ['AL', 'AK', 'AR', 'AZ', 'CA', 'CO', 'FL', 'GA', 'HI', 'ID', 'KS', 'LA', 'MS', 'MO', 'MT', 'NV', 'NM', 'OK', 'OR', 'TX', 'TN', 'UT', 'WA', 'WY'],
+            'Other': [] # international and all others
+        }
+
+        def find_region(state):
+            for region, states in regions.items():
+                if state in states:
+                    return region
+            return 'Other'
+
+        merged_df['Region'] = merged_df['BA STATE'].apply(find_region)
+        region_counts = merged_df['Region'].value_counts().reset_index()
+        region_counts.columns = ['Region', 'Count']
+
+        display(region_counts)
+        ```
+
+    -   Number of Filers per Geographic Region per Filer Status:
+
+        ```{python}
+        grouped = merged_df.groupby('FILER STATUS')
+        region_counts_per_filer = pd.DataFrame()
+
+        def add_counts_per_filer(grouped, field, field_name):
+            counts_by_filer = []
+            for name, group in grouped:
+                counts = group[field].value_counts().reset_index()
+                counts.columns = [field_name, 'Count']
+                counts['FILER STATUS'] = name
+                counts_by_filer.append(counts)
+            return pd.concat(counts_by_filer)
+
+        # count number of filers per geographic region per filer status
+        region_counts_per_filer = add_counts_per_filer(grouped, 'Region', 'Region')
+
+        # show the resulting dataframe
+        display(region_counts_per_filer)
+        ```
+
 2.  **Industry**
 
     -   Some industries will be more inclined to donate to environmental causes than others.
 
     -   To reduce bias within each filer status, we can compare businesses within the same industries across different filer statuses.
 
+    -   You can translate Standard Industrial Classification (SIC) Codes into industries using this [SIC Code List](https://www.sec.gov/corpfin/division-of-corporation-finance-standard-industrial-classification-sic-code-list).
+
+    -   Number of Filers per Standard Industrial Classification:
+
+        ```{python}
+        # count number of filers per standard industrial classification
+        classifications = sub_data['CLASSIFICATION'].value_counts().reset_index()
+        classifications.columns = ['CLASSIFICATION', 'Count']
+
+        display(classifications)
+        ```
+
+    -   Number of Filers per Standard Industrial Classification per Filer Status:
+
+        ```{python}
+        classification_counts_per_filer = pd.DataFrame()
+
+        # count number of filers per standard industrial classification per filer status
+        classification_counts_per_filer = add_counts_per_filer(grouped, 'CLASSIFICATION', 'CLASSIFICATION')
+        display(classification_counts_per_filer)
+        ```
+
     -   The following ten industries appear most often in the Submissions Data Set and should thus be prioritized in our research to ensure a representative sample.
 
-    ```{python}
+        ```{python}
+        industries = [
+            "Pharmaceutical Preparations",
+            "Real Estate Investment Trusts",
+            "Prepackaged Software",
+            "State Commercial Banks",
+            "Biological Products, Except Diagnostic Substances",
+            "Fire, Marine, and Casualty Insurance",
+            "Metal Cans",
+            "Laboratory Analytical Instruments",
+            "Calculating and Accounting Machines, Except Electronic Computers",
+            "Miscellaneous Electrical Machinery, Equipment, and Supplies"
+        ]
 
-    # read in data from 'sub_data.csv' in the 'data' folder
-    sub_data = pd.read_csv('../data/sub.csv')
-
-    industries = [
-        "Pharmaceutical Preparations",
-        "Real Estate Investment Trusts",
-        "Prepackaged Software",
-        "State Commercial Banks",
-        "Biological Products, Except Diagnostic Substances",
-        "Fire, Marine, and Casualty Insurance",
-        "Metal Cans",
-        "Laboratory Analytical Instruments",
-        "Calculating and Accounting Machines, Except Electronic Computers",
-        "Miscellaneous Electrical Machinery, Equipment, and Supplies"
-    ]
-
-    # count the number of filers for each unique classification code
-    classifications = sub_data['CLASSIFICATION'].value_counts().reset_index()
-    classifications.columns = ['CLASSIFICATION', 'NUMBER OF FILERS']
-    classifications['INDUSTRY'] = pd.Series(industries)
+        classifications['INDUSTRY'] = pd.Series(industries)
 
 
-    # show the resulting dataframe
-    display(classifications.head(10))
-
-    ```
+        # show the resulting dataframe
+        display(classifications.head(10))
+        ```
 
 3.  **Financial Performance**
 
     -   The Submissions Data Set identifies public float as a criterion for filer status, but that value varies quite a bit within each classification.
 
-    -   To ensure a balanced comparison, our assessment should target filers in the bottom 25%, middle 50%, and top 25% of each classification.
+    -   Number of Filers per Public Float Percentile (considering entire Submissions Data Set):
 
         ```{python}
+        # calculate public float quantiles
+        def calculate_quantiles(df, element, quantiles=[0.25, 0.75]):
+            grouped = df.groupby('FILER STATUS')
+            ranges = []
 
-        num_data = pd.read_csv('../data/num.csv')
+            for name, group in grouped:
+                values = group[group['FINANCIAL ELEMENT'] == element]['VALUE']
+                quantile_values = values.quantile(quantiles)
+                ranges.append({
+                    'FILER STATUS': name,
+                    'Bottom 25%': round(quantile_values[0.25]),
+                    'Top 25%': round(quantile_values[0.75])
+                })
 
-        merged_df = pd.merge(sub_data, num_data, on='ACCESSION NUMBER')
+            return pd.DataFrame(ranges)
 
-        grouped = merged_df.groupby('FILER STATUS')
+        # merge and calculate public float percentiles
+        public_floats = merged_df[merged_df['FINANCIAL ELEMENT'] == 'EntityPublicFloat'][['ACCESSION NUMBER', 'VALUE']]
+        merged_df = merged_df.merge(public_floats, on='ACCESSION NUMBER', suffixes=('', '_public_float')).rename(columns={'VALUE_public_float': 'Public Float'})
 
-        ranges = []
+        percentiles = merged_df['Public Float'].quantile([0.25, 0.75]).values
+        merged_df['Public Float Percentile'] = pd.cut(merged_df['Public Float'], bins=[-float('inf'), percentiles[0], percentiles[1], float('inf')], labels=['Bottom 25%', 'Middle 50%', 'Top 25%'])
 
-        for name, group in grouped:
-            public_floats = group[group['FINANCIAL ELEMENT'] == 'EntityPublicFloat']['VALUE']
-            
-            bottom_25 = public_floats.quantile(0.25)
-            top_25 = public_floats.quantile(0.75)
-            
-            ranges.append({
-                'FILER STATUS': name,
-                'Bottom 25%': round(bottom_25),
-                'Top 25%': round(top_25)
-            })
+        public_float_counts = merged_df['Public Float Percentile'].value_counts().reset_index()
+        public_float_counts.columns = ['Public Float Percentile', 'Count']
 
-        ranges_df = pd.DataFrame(ranges)
+        display(public_float_counts)
 
-        ranges_df
+        ```
 
+    -   Number of Filers per Public Float Percentile per Filer Status (considering entire Submissions Data Set):
+
+        ```{python}
+        public_float_counts_per_filer = pd.DataFrame()
+
+        # count number of filers per standard industrial classification per filer status
+        public_float_counts_per_filer = add_counts_per_filer(grouped, 'FILER STATUS', 'Public Float Percentile')
+
+        display(public_float_counts_per_filer)
+        ```
+
+    -   To ensure a balanced comparison, our assessment should target filers in the bottom 25%, middle 50%, and top 25% of each classification.
+
+    -   Public Float Percentile Values within each Filer Status:
+
+        ```{python}
+        ranges_df = calculate_quantiles(merged_df, 'EntityPublicFloat')
+        display(ranges_df)
         ```
 
 ### 2.2. Sample Size
@@ -224,7 +313,6 @@ Objective: Develop a framework for analyzing and comparing the resource allocati
     -   **Use:** 2024 Q1 SEC Submissions and Numbers. Run the following code to create a merged dataset:
 
         ```{python}
-        """
         import pandas as pd
 
         # load the datasets
@@ -235,9 +323,7 @@ Objective: Develop a framework for analyzing and comparing the resource allocati
         merged_df = pd.merge(num_data, sub_data, on='ACCESSION NUMBER')
 
         # save the merged dataset to a CSV file
-        merged_df.to_csv('merged_dataset.csv', index=False)
-
-        """
+        # merged_df.to_csv('merged_dataset.csv', index=False)
         ```
 
     -   **Data Points:** Extract the following data points for each filer. Label missing data points 'nan.'
@@ -346,10 +432,7 @@ Objective: Develop a framework for analyzing and comparing the resource allocati
             'Climate Reporting (8-K)': [''],
             'Climate Reporting (ESG Report)': ['']
         }
-          
-        # Create the DataFrame
+
         filer_comparison_sample_df = pd.DataFrame(filer_comparison_sample_data)
-          
-        # Display the DataFrame
         display(filer_comparison_sample_df)
         ```

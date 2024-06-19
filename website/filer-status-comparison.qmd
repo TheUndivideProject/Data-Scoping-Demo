@@ -91,7 +91,7 @@ Objective: Establish clear criteria for selecting companies within each filing s
 
         ## Target Cities Mapped
 
-        ![](/data/target-cities.png)
+        ![](/visualizations/target-cities.png)
         :::
 
     -   Number of Filers per Geographic Region as defined in Exempt Organizations Business Master File Extract (EO BMF) <https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf>:
@@ -132,6 +132,8 @@ Objective: Establish clear criteria for selecting companies within each filing s
         display(region_counts)
         ```
 
+        ![](/visualizations/filers-per-geo-bar-chart.png)
+
     -   Number of Filers per Geographic Region per Filer Status:
 
         ```{python}
@@ -158,6 +160,8 @@ Objective: Establish clear criteria for selecting companies within each filing s
         display(region_counts_per_filer)
         ```
 
+        ![](/visualizations/filers-per-geo-per-filer-status-bar-chart.png)
+
 2.  **Industry**
 
     -   Some industries will be more inclined to donate to environmental causes than others.
@@ -178,6 +182,8 @@ Objective: Establish clear criteria for selecting companies within each filing s
 
         display(classification_counts)
         ```
+
+        ![](/visualizations/filers-per-classification-bar-chart.png)
 
     -   Number of Filers per Standard Industrial Classification per Filer Status:
 
@@ -248,7 +254,7 @@ Objective: Establish clear criteria for selecting companies within each filing s
 
         ```
 
-    -   Number of Filers per Public Float Percentile per Filer Status:
+        ![](/visualizations/filers-per-public-float-bar-chart.png)Number of Filers per Public Float Percentile per Filer Status:
 
         ```{python}
         grouped = merged_df.groupby('FILER STATUS')
@@ -269,7 +275,7 @@ Objective: Establish clear criteria for selecting companies within each filing s
         display(ranges_df)
         ```
 
-### 2.2. Sample Size
+        ![](/visualizations/filers-per-public-float-per-filer-status-bar-chart.png)
 
 ------------------------------------------------------------------------
 

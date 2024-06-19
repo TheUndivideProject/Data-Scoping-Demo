@@ -95,7 +95,6 @@ Objective: Establish clear criteria for selecting companies within each filing s
     -   Number of Filers per Geographic Region as defined in Exempt Organizations Business Master File Extract (EO BMF) <https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf>:
 
         ```{python}
-
         # read in data from 'sub_data.csv' and 'num_data.csv' in the 'data' folder
         sub_data = pd.read_csv('../data/sub.csv')
         num_data = pd.read_csv('../data/num.csv')
@@ -129,13 +128,13 @@ Objective: Establish clear criteria for selecting companies within each filing s
         region_counts_per_filer = pd.DataFrame()
 
         def add_counts_per_filer(grouped, field, field_name):
-            counts_by_filer = []
+            counts_per_filer = []
             for name, group in grouped:
                 counts = group[field].value_counts().reset_index()
                 counts.columns = [field_name, 'Count']
                 counts['FILER STATUS'] = name
-                counts_by_filer.append(counts)
-            return pd.concat(counts_by_filer)
+                counts_per_filer.append(counts)
+            return pd.concat(counts_per_filer)
 
         # count number of filers per geographic region per filer status
         region_counts_per_filer = add_counts_per_filer(grouped, 'Region', 'Region')
@@ -151,6 +150,14 @@ Objective: Establish clear criteria for selecting companies within each filing s
     -   To reduce bias within each filer status, we can compare businesses within the same industries across different filer statuses.
 
     -   You can translate Standard Industrial Classification (SIC) Codes into industries using this [SIC Code List](https://www.sec.gov/corpfin/division-of-corporation-finance-standard-industrial-classification-sic-code-list).
+
+    -   \# count number of filers per standard industrial classification
+
+        classifications = sub_data\['CLASSIFICATION'\].value_counts().reset_index()
+
+        classifications.columns = \['CLASSIFICATION', 'Count'\]
+
+        display(classifications)
 
     -   Number of Filers per Standard Industrial Classification:
 
@@ -204,9 +211,7 @@ Objective: Establish clear criteria for selecting companies within each filing s
         ```{python}
         # calculate public float quantiles
         def calculate_quantiles(df, element, quantiles=[0.25, 0.75]):
-            grouped = df.groupby('FILER STATUS')
             ranges = []
-
             for name, group in grouped:
                 values = group[group['FINANCIAL ELEMENT'] == element]['VALUE']
                 quantile_values = values.quantile(quantiles)
@@ -235,10 +240,11 @@ Objective: Establish clear criteria for selecting companies within each filing s
     -   Number of Filers per Public Float Percentile per Filer Status (considering entire Submissions Data Set):
 
         ```{python}
+        grouped = merged_df.groupby('FILER STATUS')
         public_float_counts_per_filer = pd.DataFrame()
 
         # count number of filers per standard industrial classification per filer status
-        public_float_counts_per_filer = add_counts_per_filer(grouped, 'FILER STATUS', 'Public Float Percentile')
+        public_float_counts_per_filer = add_counts_per_filer(grouped, 'Public Float Percentile', 'Public Float Percentile')
 
         display(public_float_counts_per_filer)
         ```

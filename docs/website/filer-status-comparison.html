@@ -411,13 +411,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>region_counts_per_filer <span class="op">=</span> pd.DataFrame()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_counts_per_filer(grouped, field, field_name):</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    counts_by_filer <span class="op">=</span> []</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    counts_per_filer <span class="op">=</span> []</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, group <span class="kw">in</span> grouped:</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> group[field].value_counts().reset_index()</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        counts.columns <span class="op">=</span> [field_name, <span class="st">'Count'</span>]</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        counts[<span class="st">'FILER STATUS'</span>] <span class="op">=</span> name</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        counts_by_filer.append(counts)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.concat(counts_by_filer)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        counts_per_filer.append(counts)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.concat(counts_per_filer)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># count number of filers per geographic region per filer status</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>region_counts_per_filer <span class="op">=</span> add_counts_per_filer(grouped, <span class="st">'Region'</span>, <span class="st">'Region'</span>)</span>
@@ -523,6 +523,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Some industries will be more inclined to donate to environmental causes than others.</p></li>
 <li><p>To reduce bias within each filer status, we can compare businesses within the same industries across different filer statuses.</p></li>
 <li><p>You can translate Standard Industrial Classification (SIC) Codes into industries using this <a href="https://www.sec.gov/corpfin/division-of-corporation-finance-standard-industrial-classification-sic-code-list">SIC Code List</a>.</p></li>
+<li><p># count number of filers per standard industrial classification</p>
+<p>classifications = sub_data[‘CLASSIFICATION’].value_counts().reset_index()</p>
+<p>classifications.columns = [‘CLASSIFICATION’, ‘Count’]</p>
+<p>display(classifications)</p></li>
 <li><p>Number of Filers per Standard Industrial Classification:</p>
 <div class="cell" data-execution_count="4">
 <details>
@@ -818,31 +822,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate public float quantiles</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_quantiles(df, element, quantiles<span class="op">=</span>[<span class="fl">0.25</span>, <span class="fl">0.75</span>]):</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    grouped <span class="op">=</span> df.groupby(<span class="st">'FILER STATUS'</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ranges <span class="op">=</span> []</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, group <span class="kw">in</span> grouped:</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        values <span class="op">=</span> group[group[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> element][<span class="st">'VALUE'</span>]</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        quantile_values <span class="op">=</span> values.quantile(quantiles)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        ranges.append({</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">'FILER STATUS'</span>: name,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Bottom 25%'</span>: <span class="bu">round</span>(quantile_values[<span class="fl">0.25</span>]),</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Top 25%'</span>: <span class="bu">round</span>(quantile_values[<span class="fl">0.75</span>])</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    ranges <span class="op">=</span> []</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, group <span class="kw">in</span> grouped:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        values <span class="op">=</span> group[group[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> element][<span class="st">'VALUE'</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        quantile_values <span class="op">=</span> values.quantile(quantiles)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        ranges.append({</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">'FILER STATUS'</span>: name,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Bottom 25%'</span>: <span class="bu">round</span>(quantile_values[<span class="fl">0.25</span>]),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Top 25%'</span>: <span class="bu">round</span>(quantile_values[<span class="fl">0.75</span>])</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(ranges)</span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(ranges)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># merge and calculate public float percentiles</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>public_floats <span class="op">=</span> merged_df[merged_df[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="st">'EntityPublicFloat'</span>][[<span class="st">'ACCESSION NUMBER'</span>, <span class="st">'VALUE'</span>]]</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> merged_df.merge(public_floats, on<span class="op">=</span><span class="st">'ACCESSION NUMBER'</span>, suffixes<span class="op">=</span>(<span class="st">''</span>, <span class="st">'_public_float'</span>)).rename(columns<span class="op">=</span>{<span class="st">'VALUE_public_float'</span>: <span class="st">'Public Float'</span>})</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>percentiles <span class="op">=</span> merged_df[<span class="st">'Public Float'</span>].quantile([<span class="fl">0.25</span>, <span class="fl">0.75</span>]).values</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>merged_df[<span class="st">'Public Float Percentile'</span>] <span class="op">=</span> pd.cut(merged_df[<span class="st">'Public Float'</span>], bins<span class="op">=</span>[<span class="op">-</span><span class="bu">float</span>(<span class="st">'inf'</span>), percentiles[<span class="dv">0</span>], percentiles[<span class="dv">1</span>], <span class="bu">float</span>(<span class="st">'inf'</span>)], labels<span class="op">=</span>[<span class="st">'Bottom 25%'</span>, <span class="st">'Middle 50%'</span>, <span class="st">'Top 25%'</span>])</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>public_float_counts <span class="op">=</span> merged_df[<span class="st">'Public Float Percentile'</span>].value_counts().reset_index()</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>public_float_counts.columns <span class="op">=</span> [<span class="st">'Public Float Percentile'</span>, <span class="st">'Count'</span>]</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>display(public_float_counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># merge and calculate public float percentiles</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>public_floats <span class="op">=</span> merged_df[merged_df[<span class="st">'FINANCIAL ELEMENT'</span>] <span class="op">==</span> <span class="st">'EntityPublicFloat'</span>][[<span class="st">'ACCESSION NUMBER'</span>, <span class="st">'VALUE'</span>]]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> merged_df.merge(public_floats, on<span class="op">=</span><span class="st">'ACCESSION NUMBER'</span>, suffixes<span class="op">=</span>(<span class="st">''</span>, <span class="st">'_public_float'</span>)).rename(columns<span class="op">=</span>{<span class="st">'VALUE_public_float'</span>: <span class="st">'Public Float'</span>})</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>percentiles <span class="op">=</span> merged_df[<span class="st">'Public Float'</span>].quantile([<span class="fl">0.25</span>, <span class="fl">0.75</span>]).values</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>merged_df[<span class="st">'Public Float Percentile'</span>] <span class="op">=</span> pd.cut(merged_df[<span class="st">'Public Float'</span>], bins<span class="op">=</span>[<span class="op">-</span><span class="bu">float</span>(<span class="st">'inf'</span>), percentiles[<span class="dv">0</span>], percentiles[<span class="dv">1</span>], <span class="bu">float</span>(<span class="st">'inf'</span>)], labels<span class="op">=</span>[<span class="st">'Bottom 25%'</span>, <span class="st">'Middle 50%'</span>, <span class="st">'Top 25%'</span>])</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>public_float_counts <span class="op">=</span> merged_df[<span class="st">'Public Float Percentile'</span>].value_counts().reset_index()</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>public_float_counts.columns <span class="op">=</span> [<span class="st">'Public Float Percentile'</span>, <span class="st">'Count'</span>]</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>display(public_float_counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -882,12 +884,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="8">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>public_float_counts_per_filer <span class="op">=</span> pd.DataFrame()</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># count number of filers per standard industrial classification per filer status</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>public_float_counts_per_filer <span class="op">=</span> add_counts_per_filer(grouped, <span class="st">'FILER STATUS'</span>, <span class="st">'Public Float Percentile'</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>display(public_float_counts_per_filer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> merged_df.groupby(<span class="st">'FILER STATUS'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>public_float_counts_per_filer <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># count number of filers per standard industrial classification per filer status</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>public_float_counts_per_filer <span class="op">=</span> add_counts_per_filer(grouped, <span class="st">'Public Float Percentile'</span>, <span class="st">'Public Float Percentile'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>display(public_float_counts_per_filer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -905,20 +908,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>Middle 50%</td>
+<td>234017</td>
 <td>1-LAF</td>
-<td>486894</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Top 25%</td>
+<td>152808</td>
+<td>1-LAF</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Bottom 25%</td>
+<td>7268</td>
 <td>1-LAF</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">0</td>
+<td>Middle 50%</td>
+<td>63917</td>
 <td>2-ACC</td>
-<td>127869</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Bottom 25%</td>
+<td>32816</td>
+<td>2-ACC</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Top 25%</td>
+<td>1885</td>
 <td>2-ACC</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>Bottom 25%</td>
+<td>117075</td>
 <td>4-NON</td>
-<td>417872</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Middle 50%</td>
+<td>15968</td>
+<td>4-NON</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Top 25%</td>
+<td>2358</td>
 <td>4-NON</td>
 </tr>
 </tbody>
